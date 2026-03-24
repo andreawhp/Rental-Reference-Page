@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rental Reference Request</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Georgia&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #f6f7fb;
@@ -48,8 +45,14 @@
     }
 
     h1 {
-      margin-bottom: 10px;
+      margin: 0 0 10px;
       font-size: 2.2rem;
+    }
+
+    p.lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
     .form-grid {
@@ -59,6 +62,7 @@
     }
 
     .full { grid-column: 1 / -1; }
+    .thirds { grid-template-columns: repeat(3, 1fr); }
 
     label {
       display: block;
@@ -66,23 +70,48 @@
       margin-bottom: 6px;
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 12px;
       border-radius: 10px;
       border: 1px solid var(--line);
       font-family: 'Roboto', sans-serif;
+      font-size: 0.96rem;
+      background: white;
     }
 
     textarea {
-      min-height: 120px;
+      min-height: 110px;
       resize: vertical;
     }
 
     .inline-options {
       display: flex;
-      gap: 15px;
+      flex-wrap: wrap;
+      gap: 16px;
       margin-top: 5px;
+    }
+
+    .inline-options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    .inline-options input[type="radio"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .conditional {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .conditional.show {
+      display: block;
     }
 
     button {
@@ -105,133 +134,204 @@
     }
 
     @media (max-width: 760px) {
-      .form-grid { grid-template-columns: 1fr; }
+      .form-grid, .thirds { grid-template-columns: 1fr; }
     }
   </style>
 </head>
-
 <body>
   <div class="wrap">
-
     <div class="card">
       <h1>Rental Reference Request</h1>
-      <p>Please review and complete the information below.</p>
+      <p class="lead">Please complete this form regarding a previous tenant. This information will help us evaluate the applicant's rental history and determine whether we should rent to them.</p>
     </div>
 
     <form id="form">
-
       <div class="card">
-        <h2>Requesting Tenant / Property</h2>
+        <h2>Previous Landlord Information</h2>
         <div class="form-grid">
           <div>
-            <label>Tenant full name</label>
-            <input name="tenantName">
+            <label for="landlordName">Name</label>
+            <input id="landlordName" name="landlordName">
           </div>
           <div>
-            <label>Tenant email</label>
-            <input name="tenantEmail">
-          </div>
-          <div>
-            <label>Property applying for</label>
-            <input name="propertyAddress">
-          </div>
-          <div>
-            <label>Requested move-in date</label>
-            <input name="moveInDate">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email">
           </div>
         </div>
       </div>
 
       <div class="card">
-        <h2>Previous Landlord / Property Manager</h2>
+        <h2>Requesting Tenant Information</h2>
         <div class="form-grid">
           <div>
-            <label>Landlord or manager name</label>
-            <input name="landlordName">
+            <label for="tenantName">Tenant name</label>
+            <input id="tenantName" name="tenantName">
           </div>
           <div>
-            <label>Company name</label>
-            <input name="companyName">
-          </div>
-          <div>
-            <label>Phone number</label>
-            <input name="phone">
-          </div>
-          <div>
-            <label>Email address</label>
-            <input name="email">
-          </div>
-          <div class="full">
-            <label>Address rented by tenant</label>
-            <input name="previousAddress">
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Tenancy Details</h2>
-        <div class="form-grid">
-          <div>
-            <label>Lease start date</label>
-            <input name="leaseStart">
-          </div>
-          <div>
-            <label>Lease end date</label>
-            <input name="leaseEnd">
-          </div>
-          <div>
-            <label>Monthly rent</label>
-            <input name="rent">
-          </div>
-          <div>
-            <label>Occupants listed on lease</label>
-            <input name="occupants">
+            <label for="previousAddress">Previous rental address</label>
+            <input id="previousAddress" name="previousAddress">
           </div>
 
-          <div class="full">
-            <label>Was rent paid on time?</label>
+          <div>
+            <label for="moveInDate">Move-in date</label>
+            <input id="moveInDate" name="moveInDate" type="date">
+          </div>
+          <div>
+            <label for="moveOutDate">Move-out date</label>
+            <input id="moveOutDate" name="moveOutDate" type="date">
+          </div>
+
+          <div>
+            <label>Proper move-out notice given?</label>
             <div class="inline-options">
-              <label><input type="radio" name="paid" value="Yes"> Yes</label>
-              <label><input type="radio" name="paid" value="Usually"> Usually</label>
-              <label><input type="radio" name="paid" value="No"> No</label>
+              <label><input type="radio" name="properNotice" value="Yes"> Yes</label>
+              <label><input type="radio" name="properNotice" value="No"> No</label>
+            </div>
+          </div>
+          <div>
+            <label for="moveOutTerms">Move-out terms</label>
+            <input id="moveOutTerms" name="moveOutTerms" placeholder="Example: 30-day notice, mutual agreement, lease end">
+          </div>
+
+          <div>
+            <label for="rentAmount">Rent amount</label>
+            <input id="rentAmount" name="rentAmount" placeholder="$1,850">
+          </div>
+          <div>
+            <label for="rentalAgreement">Rental agreement</label>
+            <select id="rentalAgreement" name="rentalAgreement">
+              <option value="">Select one</option>
+              <option value="Lease">Lease</option>
+              <option value="Month-to-month">Month-to-month</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label>Late payments?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="latePayments" value="Yes"> Yes</label>
+              <label><input type="radio" name="latePayments" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="latePayments:Yes">
+              <label for="latePaymentsCount">If yes, how many?</label>
+              <input id="latePaymentsCount" name="latePaymentsCount">
+            </div>
+          </div>
+
+          <div class="full">
+            <label>NSF checks?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="nsfChecks" value="Yes"> Yes</label>
+              <label><input type="radio" name="nsfChecks" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="nsfChecks:Yes">
+              <label for="nsfChecksCount">If yes, how many?</label>
+              <input id="nsfChecksCount" name="nsfChecksCount">
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Lease violations?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="leaseViolations" value="Yes"> Yes</label>
+              <label><input type="radio" name="leaseViolations" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="leaseViolations:Yes">
+              <label for="leaseViolationsDetails">If yes, please provide details</label>
+              <textarea id="leaseViolationsDetails" name="leaseViolationsDetails"></textarea>
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Eviction?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="eviction" value="Yes"> Yes</label>
+              <label><input type="radio" name="eviction" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="eviction:Yes">
+              <label for="evictionWhy">If yes, why?</label>
+              <textarea id="evictionWhy" name="evictionWhy"></textarea>
+            </div>
+          </div>
+
+          <div>
+            <label for="occupants">Number of occupants</label>
+            <input id="occupants" name="occupants">
+          </div>
+          <div class="full">
+            <label>Pets?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="pets" value="Yes"> Yes</label>
+              <label><input type="radio" name="pets" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="pets:Yes">
+              <label for="petsHowMany">If yes, how many?</label>
+              <input id="petsHowMany" name="petsHowMany">
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Are you a friend, coworker, or related to the previous tenant?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="relationshipConnection" value="Yes"> Yes</label>
+              <label><input type="radio" name="relationshipConnection" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="relationshipConnection:Yes">
+              <label for="relationshipDetails">If yes, how are you related?</label>
+              <textarea id="relationshipDetails" name="relationshipDetails"></textarea>
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Was the property left in good condition?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="goodCondition" value="Yes"> Yes</label>
+              <label><input type="radio" name="goodCondition" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="goodCondition:No">
+              <label for="goodConditionDetails">If no, please provide details</label>
+              <textarea id="goodConditionDetails" name="goodConditionDetails"></textarea>
             </div>
           </div>
 
           <div class="full">
             <label>Would you rent to this tenant again?</label>
             <div class="inline-options">
-              <label><input type="radio" name="again" value="Yes"> Yes</label>
-              <label><input type="radio" name="again" value="Maybe"> Maybe</label>
-              <label><input type="radio" name="again" value="No"> No</label>
+              <label><input type="radio" name="rentAgain" value="Yes"> Yes</label>
+              <label><input type="radio" name="rentAgain" value="No"> No</label>
             </div>
           </div>
 
+          <div class="full">
+            <label for="otherComments">Other comments</label>
+            <textarea id="otherComments" name="otherComments"></textarea>
+          </div>
         </div>
       </div>
 
       <div class="card">
-        <h2>Property Condition / Notes</h2>
+        <h2>Completed By</h2>
         <div class="form-grid">
-          <div class="full">
-            <label>Additional comments</label>
-            <textarea name="comments"></textarea>
+          <div>
+            <label for="completedBy">Completed by</label>
+            <input id="completedBy" name="completedBy">
           </div>
           <div>
-            <label>Completed by</label>
-            <input name="completedBy">
-          </div>
-          <div>
-            <label>Date completed</label>
-            <input name="date">
+            <label for="date">Date completed</label>
+            <input id="date" name="date" type="date">
           </div>
         </div>
       </div>
 
       <button type="submit">Submit Reference</button>
       <div class="message" id="msg"></div>
+          <div class="card">
+        <p style="margin:0; line-height:1.6; color:#374151;">
+          Thank you for your time! If you have any questions or additional comments, please call us at 509-525-1040 or email our office at office@welcomehps.com
+        </p>
+      </div>
 
     </form>
-
   </div>
 
   <script>
@@ -241,20 +341,35 @@
     function prefill() {
       const params = new URLSearchParams(window.location.search);
       params.forEach((val, key) => {
-        if (form.elements[key]) {
-          form.elements[key].value = val;
+        const field = form.elements[key];
+        if (!field) return;
+        if (field instanceof RadioNodeList) {
+          const target = form.querySelector(`input[name="${key}"][value="${val}"]`);
+          if (target) target.checked = true;
+        } else {
+          field.value = val;
         }
+      });
+      updateConditionalFields();
+    }
+
+    function updateConditionalFields() {
+      document.querySelectorAll('.conditional').forEach(section => {
+        const [fieldName, expectedValue] = section.dataset.showWhen.split(':');
+        const selected = form.querySelector(`input[name="${fieldName}"]:checked`);
+        const show = selected && selected.value === expectedValue;
+        section.classList.toggle('show', show);
       });
     }
 
+    form.addEventListener('change', updateConditionalFields);
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      msg.textContent = "Form submitted (backend will be connected later).";
+      msg.textContent = 'Form submitted (backend will be connected later).';
     });
 
     prefill();
   </script>
-
 </body>
 </html>
 
