@@ -1,10 +1,445 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rental Reference Request</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #dbe2ea;
+      --accent: #2563eb;
+      --accent-soft: #e8f0ff;
+      --danger: #b91c1c;
+      --success: #166534;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 180px);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 18px 64px;
+    }
+
+    .hero, .card {
+      background: var(--card);
+      border: 1px solid rgba(219, 226, 234, 0.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.05;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 760px;
+      line-height: 1.6;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.96rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    .primary { background: var(--accent); color: white; }
+    .secondary { background: #eef2f7; color: var(--text); }
+    .ghost { background: var(--accent-soft); color: var(--accent); }
+    .danger { background: #fee2e2; color: var(--danger); }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      font-size: 1.2rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .hint {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px 13px;
+      font: inherit;
+      color: inherit;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #8bb1ff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    textarea { min-height: 120px; resize: vertical; }
+
+    .inline-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-top: 6px;
+    }
+
+    .inline-options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .inline-options input[type="radio"],
+    .inline-options input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .status {
+      margin-top: 14px;
+      font-size: 0.95rem;
+      color: var(--success);
+      min-height: 1.4em;
+    }
+
+    .summary {
+      background: #fbfcfe;
+      border: 1px dashed var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      color: #374151;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      min-height: 100px;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 760px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .wrap { padding-inline: 14px; }
+      .hero, .card { padding: 18px; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello Andrea 🚀</h1>
-  <p>If you see this, your site works.</p>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Rental Reference Request</h1>
+      <p class="subtitle">
+        Use this form to request and collect rental references from previous landlords. It works on GitHub Pages and lets you save edits in the browser, print a clean copy, or copy a summary for email.
+      </p>
+      <div class="toolbar">
+        <button class="primary" type="button" id="saveBtn">Save draft</button>
+        <button class="secondary" type="button" id="printBtn">Print / Save PDF</button>
+        <button class="ghost" type="button" id="copyBtn">Copy summary</button>
+        <button class="danger" type="button" id="clearBtn">Clear form</button>
+      </div>
+      <div class="status" id="status"></div>
+    </section>
+
+    <form id="referenceForm">
+      <section class="card">
+        <h2 class="section-title">Requesting Tenant / Property</h2>
+        <div class="form-grid">
+          <div>
+            <label for="tenantName">Tenant full name</label>
+            <input id="tenantName" name="tenantName" placeholder="Jordan Smith" />
+          </div>
+          <div>
+            <label for="tenantEmail">Tenant email</label>
+            <input id="tenantEmail" name="tenantEmail" type="email" placeholder="tenant@email.com" />
+          </div>
+          <div>
+            <label for="propertyAddress">Property applying for</label>
+            <input id="propertyAddress" name="propertyAddress" placeholder="123 Main St, Unit 4" />
+          </div>
+          <div>
+            <label for="moveInDate">Requested move-in date</label>
+            <input id="moveInDate" name="moveInDate" type="date" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Previous Landlord / Property Manager</h2>
+        <div class="form-grid">
+          <div>
+            <label for="landlordName">Landlord or manager name</label>
+            <input id="landlordName" name="landlordName" placeholder="Alex Rivera" />
+          </div>
+          <div>
+            <label for="companyName">Company name</label>
+            <input id="companyName" name="companyName" placeholder="Rivera Property Group" />
+          </div>
+          <div>
+            <label for="landlordPhone">Phone number</label>
+            <input id="landlordPhone" name="landlordPhone" placeholder="(555) 555-5555" />
+          </div>
+          <div>
+            <label for="landlordEmail">Email address</label>
+            <input id="landlordEmail" name="landlordEmail" type="email" placeholder="manager@company.com" />
+          </div>
+          <div class="full">
+            <label for="previousAddress">Address rented by tenant</label>
+            <input id="previousAddress" name="previousAddress" placeholder="456 Oak Ave, Apt 9" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Tenancy Details</h2>
+        <div class="form-grid">
+          <div>
+            <label for="leaseStart">Lease start date</label>
+            <input id="leaseStart" name="leaseStart" type="date" />
+          </div>
+          <div>
+            <label for="leaseEnd">Lease end date</label>
+            <input id="leaseEnd" name="leaseEnd" type="date" />
+          </div>
+          <div>
+            <label for="monthlyRent">Monthly rent</label>
+            <input id="monthlyRent" name="monthlyRent" placeholder="$1,850" />
+          </div>
+          <div>
+            <label for="occupants">Occupants listed on lease</label>
+            <input id="occupants" name="occupants" placeholder="2 adults, 1 child" />
+          </div>
+          <div class="full">
+            <label>Was rent paid on time?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="paidOnTime" value="Yes" /> Yes</label>
+              <label><input type="radio" name="paidOnTime" value="Usually" /> Usually</label>
+              <label><input type="radio" name="paidOnTime" value="No" /> No</label>
+            </div>
+          </div>
+          <div class="full">
+            <label>Would you rent to this tenant again?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="rentAgain" value="Yes" /> Yes</label>
+              <label><input type="radio" name="rentAgain" value="Maybe" /> Maybe</label>
+              <label><input type="radio" name="rentAgain" value="No" /> No</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Property Condition / Notes</h2>
+        <div class="form-grid">
+          <div class="full">
+            <label>Check all that apply</label>
+            <div class="inline-options">
+              <label><input type="checkbox" name="flags" value="Property kept clean" /> Property kept clean</label>
+              <label><input type="checkbox" name="flags" value="Good communication" /> Good communication</label>
+              <label><input type="checkbox" name="flags" value="Noise complaints" /> Noise complaints</label>
+              <label><input type="checkbox" name="flags" value="Late payments" /> Late payments</label>
+              <label><input type="checkbox" name="flags" value="Damage beyond wear and tear" /> Damage beyond wear and tear</label>
+            </div>
+          </div>
+          <div class="full">
+            <label for="comments">Additional comments</label>
+            <textarea id="comments" name="comments" placeholder="Share anything helpful about the tenant's payment history, cleanliness, lease compliance, or communication."></textarea>
+          </div>
+          <div>
+            <label for="verifiedBy">Completed by</label>
+            <input id="verifiedBy" name="verifiedBy" placeholder="Alex Rivera" />
+          </div>
+          <div>
+            <label for="completedDate">Date completed</label>
+            <input id="completedDate" name="completedDate" type="date" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Shareable Summary</h2>
+        <div class="summary" id="summaryBox">Fill out the form, then click “Copy summary.”</div>
+        <p class="footer-note">
+          This version saves edits only in the current browser. If you want landlords to submit responses back to you online, you’ll need a form backend such as Formspree, Airtable, or Google Apps Script.
+        </p>
+      </section>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('referenceForm');
+    const statusEl = document.getElementById('status');
+    const summaryBox = document.getElementById('summaryBox');
+    const storageKey = 'rental-reference-request-v1';
+
+    function setStatus(message) {
+      statusEl.textContent = message;
+      if (!message) return;
+      window.clearTimeout(setStatus._timer);
+      setStatus._timer = window.setTimeout(() => { statusEl.textContent = ''; }, 2500);
+    }
+
+    function getFormData() {
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.flags = Array.from(form.querySelectorAll('input[name="flags"]:checked')).map(el => el.value);
+      return data;
+    }
+
+    function saveDraft() {
+      localStorage.setItem(storageKey, JSON.stringify(getFormData()));
+      renderSummary();
+      setStatus('Draft saved in this browser.');
+    }
+
+    function loadDraft() {
+      const raw = localStorage.getItem(storageKey);
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        for (const [key, value] of Object.entries(data)) {
+          if (key === 'flags' && Array.isArray(value)) {
+            form.querySelectorAll('input[name="flags"]').forEach(cb => {
+              cb.checked = value.includes(cb.value);
+            });
+            continue;
+          }
+          const field = form.elements[key];
+          if (!field) continue;
+          if (field instanceof RadioNodeList) {
+            const target = form.querySelector(`input[name="${key}"][value="${CSS.escape(value)}"]`);
+            if (target) target.checked = true;
+          } else {
+            field.value = value;
+          }
+        }
+        renderSummary();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderSummary() {
+      const d = getFormData();
+      const flags = (d.flags || []).length ? d.flags.join(', ') : 'None selected';
+      summaryBox.textContent =
+`Rental Reference Request
+
+Tenant: ${d.tenantName || '-'}
+Tenant email: ${d.tenantEmail || '-'}
+Applying for: ${d.propertyAddress || '-'}
+Requested move-in: ${d.moveInDate || '-'}
+
+Previous landlord: ${d.landlordName || '-'}
+Company: ${d.companyName || '-'}
+Phone: ${d.landlordPhone || '-'}
+Email: ${d.landlordEmail || '-'}
+Previous address: ${d.previousAddress || '-'}
+
+Lease dates: ${d.leaseStart || '-'} to ${d.leaseEnd || '-'}
+Monthly rent: ${d.monthlyRent || '-'}
+Occupants: ${d.occupants || '-'}
+Paid on time: ${d.paidOnTime || '-'}
+Would rent again: ${d.rentAgain || '-'}
+Flags: ${flags}
+Comments: ${d.comments || '-'}
+Completed by: ${d.verifiedBy || '-'}
+Date completed: ${d.completedDate || '-'}`;
+    }
+
+    function clearForm() {
+      form.reset();
+      localStorage.removeItem(storageKey);
+      renderSummary();
+      setStatus('Form cleared.');
+    }
+
+    async function copySummary() {
+      renderSummary();
+      try {
+        await navigator.clipboard.writeText(summaryBox.textContent);
+        setStatus('Summary copied.');
+      } catch {
+        setStatus('Could not copy automatically. You can still select the summary manually.');
+      }
+    }
+
+    form.addEventListener('input', renderSummary);
+    document.getElementById('saveBtn').addEventListener('click', saveDraft);
+    document.getElementById('clearBtn').addEventListener('click', clearForm);
+    document.getElementById('copyBtn').addEventListener('click', copySummary);
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+    loadDraft();
+    renderSummary();
+  </script>
 </body>
 </html>
+
