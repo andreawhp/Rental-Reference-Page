@@ -4,109 +4,256 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rental Reference Request</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Georgia&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: Arial, sans-serif; background:#f5f6fa; margin:0; }
-    .wrap { max-width:900px; margin:30px auto; }
-    .card { background:white; padding:20px; border-radius:10px; margin-bottom:20px; }
-    h2 { margin-top:0; }
-    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
-    .full { grid-column:1/-1; }
-    label { display:block; margin-bottom:5px; font-weight:bold; }
-    input, textarea { width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; }
-    textarea { min-height:100px; }
-    .inline { display:flex; gap:15px; margin-top:5px; }
-    button { width:100%; padding:15px; background:#2563eb; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
-    .message { margin-top:10px; color:green; }
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #dbe2ea;
+      --accent: #2563eb;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 180px);
+      color: var(--text);
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, serif;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 18px 64px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.2rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      font-family: 'Roboto', sans-serif;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .inline-options {
+      display: flex;
+      gap: 15px;
+      margin-top: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 14px;
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 12px;
+      color: green;
+      font-weight: 500;
+    }
+
+    @media (max-width: 760px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
+
 <body>
-<div class="wrap">
+  <div class="wrap">
 
-<form id="form">
+    <div class="card">
+      <h1>Rental Reference Request</h1>
+      <p>Please review and complete the information below.</p>
+    </div>
 
-<div class="card">
-<h2>Requesting Tenant / Property</h2>
-<div class="form-grid">
-<div><label>Tenant full name</label><input name="tenantName"></div>
-<div><label>Tenant email</label><input name="tenantEmail"></div>
-<div><label>Property applying for</label><input name="propertyAddress"></div>
-<div><label>Requested move-in date</label><input name="moveInDate"></div>
-</div>
-</div>
+    <form id="form">
 
-<div class="card">
-<h2>Previous Landlord / Property Manager</h2>
-<div class="form-grid">
-<div><label>Landlord name</label><input name="landlordName"></div>
-<div><label>Company</label><input name="companyName"></div>
-<div><label>Phone</label><input name="phone"></div>
-<div><label>Email</label><input name="email"></div>
-<div class="full"><label>Address rented</label><input name="previousAddress"></div>
-</div>
-</div>
+      <div class="card">
+        <h2>Requesting Tenant / Property</h2>
+        <div class="form-grid">
+          <div>
+            <label>Tenant full name</label>
+            <input name="tenantName">
+          </div>
+          <div>
+            <label>Tenant email</label>
+            <input name="tenantEmail">
+          </div>
+          <div>
+            <label>Property applying for</label>
+            <input name="propertyAddress">
+          </div>
+          <div>
+            <label>Requested move-in date</label>
+            <input name="moveInDate">
+          </div>
+        </div>
+      </div>
 
-<div class="card">
-<h2>Tenancy Details</h2>
-<div class="form-grid">
-<div><label>Lease start</label><input name="leaseStart"></div>
-<div><label>Lease end</label><input name="leaseEnd"></div>
-<div><label>Monthly rent</label><input name="rent"></div>
-<div><label>Occupants</label><input name="occupants"></div>
-<div class="full">
-<label>Was rent paid on time?</label>
-<div class="inline">
-<label><input type="radio" name="paid" value="Yes"> Yes</label>
-<label><input type="radio" name="paid" value="Usually"> Usually</label>
-<label><input type="radio" name="paid" value="No"> No</label>
-</div>
-</div>
-<div class="full">
-<label>Would you rent again?</label>
-<div class="inline">
-<label><input type="radio" name="again" value="Yes"> Yes</label>
-<label><input type="radio" name="again" value="Maybe"> Maybe</label>
-<label><input type="radio" name="again" value="No"> No</label>
-</div>
-</div>
-</div>
-</div>
+      <div class="card">
+        <h2>Previous Landlord / Property Manager</h2>
+        <div class="form-grid">
+          <div>
+            <label>Landlord or manager name</label>
+            <input name="landlordName">
+          </div>
+          <div>
+            <label>Company name</label>
+            <input name="companyName">
+          </div>
+          <div>
+            <label>Phone number</label>
+            <input name="phone">
+          </div>
+          <div>
+            <label>Email address</label>
+            <input name="email">
+          </div>
+          <div class="full">
+            <label>Address rented by tenant</label>
+            <input name="previousAddress">
+          </div>
+        </div>
+      </div>
 
-<div class="card">
-<h2>Property Condition / Notes</h2>
-<div class="form-grid">
-<div class="full">
-<label>Comments</label>
-<textarea name="comments"></textarea>
-</div>
-<div><label>Completed by</label><input name="completedBy"></div>
-<div><label>Date</label><input name="date"></div>
-</div>
-</div>
+      <div class="card">
+        <h2>Tenancy Details</h2>
+        <div class="form-grid">
+          <div>
+            <label>Lease start date</label>
+            <input name="leaseStart">
+          </div>
+          <div>
+            <label>Lease end date</label>
+            <input name="leaseEnd">
+          </div>
+          <div>
+            <label>Monthly rent</label>
+            <input name="rent">
+          </div>
+          <div>
+            <label>Occupants listed on lease</label>
+            <input name="occupants">
+          </div>
 
-<button type="submit">Submit Reference</button>
-<div class="message" id="msg"></div>
+          <div class="full">
+            <label>Was rent paid on time?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="paid" value="Yes"> Yes</label>
+              <label><input type="radio" name="paid" value="Usually"> Usually</label>
+              <label><input type="radio" name="paid" value="No"> No</label>
+            </div>
+          </div>
 
-</form>
-</div>
+          <div class="full">
+            <label>Would you rent to this tenant again?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="again" value="Yes"> Yes</label>
+              <label><input type="radio" name="again" value="Maybe"> Maybe</label>
+              <label><input type="radio" name="again" value="No"> No</label>
+            </div>
+          </div>
 
-<script>
-const form = document.getElementById('form');
-const msg = document.getElementById('msg');
+        </div>
+      </div>
 
-function prefill(){
- const params = new URLSearchParams(window.location.search);
- params.forEach((val,key)=>{
-  if(form.elements[key]) form.elements[key].value = val;
- });
-}
+      <div class="card">
+        <h2>Property Condition / Notes</h2>
+        <div class="form-grid">
+          <div class="full">
+            <label>Additional comments</label>
+            <textarea name="comments"></textarea>
+          </div>
+          <div>
+            <label>Completed by</label>
+            <input name="completedBy">
+          </div>
+          <div>
+            <label>Date completed</label>
+            <input name="date">
+          </div>
+        </div>
+      </div>
 
-form.addEventListener('submit', e=>{
- e.preventDefault();
- msg.textContent = 'Submitted (backend coming later)';
-});
+      <button type="submit">Submit Reference</button>
+      <div class="message" id="msg"></div>
 
-prefill();
-</script>
+    </form>
+
+  </div>
+
+  <script>
+    const form = document.getElementById('form');
+    const msg = document.getElementById('msg');
+
+    function prefill() {
+      const params = new URLSearchParams(window.location.search);
+      params.forEach((val, key) => {
+        if (form.elements[key]) {
+          form.elements[key].value = val;
+        }
+      });
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      msg.textContent = "Form submitted (backend will be connected later).";
+    });
+
+    prefill();
+  </script>
 
 </body>
 </html>
