@@ -1,3 +1,33 @@
+<!--
+PREFILL LINK GUIDE
+
+Use these field names in URL:
+landlordName
+email (use %40 instead of @)
+tenantName
+previousAddress
+moveInDate (YYYY-MM-DD)
+moveOutDate (YYYY-MM-DD)
+moveOutTerms
+rentAmount
+rentalAgreement
+occupants
+latePayments (Yes/No)
+nsfChecks (Yes/No)
+leaseViolations (Yes/No)
+eviction (Yes/No)
+pets (Yes/No)
+relationshipConnection (Yes/No)
+goodCondition (Yes/No)
+rentAgain (Yes/No)
+
+Formatting:
+Space = %20
+@ = %40
+
+Example:
+?tenantName=John%20Doe&email=test%40email.com
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +54,7 @@
       margin: 0;
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 180px);
-      color: var(--text);
+      color: #1e1b18;
     }
 
     h1, h2, h3 {
@@ -141,7 +171,8 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="card">
+    <div class="card" style="text-align:center;">
+      <img src="logo.png" alt="Company Logo" style="max-width:280px; height:auto; margin-bottom:15px;">
       <h1>Rental Reference Request</h1>
       <p class="lead">Please complete this form regarding a previous tenant. This information will help us evaluate the applicant's rental history and determine whether we should rent to them.</p>
     </div>
