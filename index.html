@@ -54,7 +54,7 @@ Example:
     * { box-sizing: border-box; }
 
     body {
-      font-size: 19px;
+      font-size: 21px;
       margin: 0;
       font-family: 'Roboto', sans-serif;
       background: var(--bg);
@@ -70,6 +70,9 @@ Example:
     .sitebar {
       background: #fbfaf7;
       border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     .sitebar-inner {
@@ -78,26 +81,21 @@ Example:
       padding: 14px 40px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 24px;
+      gap: 16px;
     }
 
     .site-logo {
-      height: 52px;
+      height: 64px;
       width: auto;
       display: block;
     }
 
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: 38px;
-      font-size: 0.95rem;
-    }
-
-    .site-nav a {
+    .sitebar-title {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      line-height: 1;
       color: var(--text);
-      text-decoration: none;
     }
 
     .wrap {
@@ -201,26 +199,10 @@ Example:
     }
 
     .section-label {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px 24px;
-    }
-
-    .full { grid-column: 1 / -1; }
-
-    label {
       display: block;
       font-weight: 500;
       margin-bottom: 8px;
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--text);
     }
 
@@ -230,7 +212,7 @@ Example:
       border-radius: var(--input-radius);
       border: 1px solid var(--line);
       font-family: 'Roboto', sans-serif;
-      font-size: 1rem;
+      font-size: 1.125rem;
       background: #fbfaf8;
       color: var(--text);
       outline: none;
@@ -260,7 +242,7 @@ Example:
       gap: 8px;
       margin-bottom: 0;
       font-weight: 400;
-      font-size: 0.98rem;
+      font-size: 1.125rem;
     }
 
     .inline-options input[type="radio"] {
@@ -310,7 +292,7 @@ Example:
     .sidebar-list li {
       padding: 0;
       background: transparent;
-      font-size: 1rem;
+      font-size: 1.125rem;
       line-height: 1.75;
       color: var(--muted);
     }
@@ -319,7 +301,7 @@ Example:
       margin-top: 24px;
       padding-top: 24px;
       border-top: 1px solid var(--line);
-      font-size: 1rem;
+      font-size: 1.125rem;
       line-height: 1.8;
       color: var(--muted);
     }
@@ -358,7 +340,7 @@ Example:
       margin: 0;
       line-height: 1.8;
       color: var(--muted);
-      font-size: 1rem;
+      font-size: 1.125rem;
     }
 
     @media (max-width: 1180px) {
@@ -397,39 +379,12 @@ Example:
   <header class="sitebar">
     <div class="sitebar-inner">
       <img src="logo1.png" alt="Welcome Home Properties logo" class="site-logo">
-      <nav class="site-nav">
-        <a href="#">Rentals</a>
-        <a href="#">How to Rent</a>
-        <a href="#">Residents</a>
-        <a href="#">About</a>
-        <a href="#">FAQ</a>
-        <a href="#">Contact</a>
-      </nav>
+      <h1 class="sitebar-title">Rental Reference Request</h1>
     </div>
   </header>
 
   <div class="wrap">
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="hero-kicker">Applicant Screening</div>
-        <h1>Rental Reference Request</h1>
-        <p>Please complete this form regarding a previous tenant. This information helps our office review the applicant’s rental history and decide whether we should move forward with the application.</p>
-      </div>
-      <div class="hero-actions">
-        <button type="button" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'});">COMPLETE FORM</button>
-        <a href="#contact-box" class="ghost-button">QUESTIONS? CONTACT US</a>
-      </div>
-    </section>
-    <div class="app-header">
-      <div class="app-header-inner">
-        <div class="brand-row">
-          <img src="logo1.png" alt="Welcome Home Properties logo" style="height:68px; width:auto;">
-          <div class="brand-copy">
-            <small>Applicant Screening</small>
-            <h1>Rental Reference Request</h1>
-            <p class="lead">Please complete this form regarding a previous tenant. Your response helps us review the applicant’s rental history and make an informed leasing decision.</p>
-          </div>
-        </div>
+    </div>
         <div class="badge">Welcome Home Properties</div>
       </div>
     </div>
@@ -438,12 +393,7 @@ Example:
       <div class="main-column">
         <form id="form">
       <div class="card">
-        <div class="section-head">
-          <div>
-            <div class="section-label">Section 01</div>
-            <h2>Previous Landlord Information</h2>
-          </div>
-        </div>
+        
         <div class="form-grid">
           <div>
             <label for="landlordName">Name</label>
@@ -457,12 +407,7 @@ Example:
       </div>
 
       <div class="card">
-        <div class="section-head">
-          <div>
-            <div class="section-label">Section 02</div>
-            <h2>Requesting Tenant Information</h2>
-          </div>
-        </div>
+        
         <div class="form-grid">
           <div>
             <label for="tenantName">Tenant name</label>
@@ -611,12 +556,7 @@ Example:
       </div>
 
       <div class="card">
-        <div class="section-head">
-          <div>
-            <div class="section-label">Section 03</div>
-            <h2>Completed By</h2>
-          </div>
-        </div>
+        
         <div class="form-grid">
           <div>
             <label for="completedBy">Completed by</label>
