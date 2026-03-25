@@ -37,14 +37,18 @@ Example:
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f6f7fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --line: #dbe2ea;
-      --accent: #2563eb;
-      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-      --radius: 18px;
+      --bg: #f7f4ef;
+      --card: #fdfbf8;
+      --card-strong: #ffffff;
+      --text: #1e1b18;
+      --muted: #6f685f;
+      --line: rgba(30, 27, 24, 0.16);
+      --accent: #1e1b18;
+      --accent-soft: #efe9e1;
+      --shadow: 0 10px 24px rgba(30, 27, 24, 0.06);
+      --radius: 10px;
+      --input-radius: 6px;
+      --max: 1480px;
     }
 
     * { box-sizing: border-box; }
@@ -53,137 +57,393 @@ Example:
       font-size: 19px;
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 180px);
-      color: #1e1b18;
+      background: var(--bg);
+      color: var(--text);
     }
 
     h1, h2, h3 {
       font-family: Georgia, serif;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .sitebar {
+      background: #fbfaf7;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sitebar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .site-logo {
+      height: 52px;
+      width: auto;
+      display: block;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 38px;
+      font-size: 0.95rem;
+    }
+
+    .site-nav a {
+      color: var(--text);
+      text-decoration: none;
     }
 
     .wrap {
-      max-width: 980px;
+      max-width: var(--max);
       margin: 0 auto;
-      padding: 32px 18px 64px;
+      padding: 26px 40px 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 54px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      line-height: 1;
+    }
+
+    .hero-kicker {
+      margin: 0 0 20px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 880px;
+    }
+
+    .hero-actions {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-actions button,
+    .ghost-button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px 18px;
+      border-radius: 4px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+
+    .ghost-button {
+      background: transparent;
+      color: var(--text);
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 460px;
+      gap: 54px;
+      align-items: start;
+    }
+
+    .main-column {
+      min-width: 0;
     }
 
     .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 24px;
-      margin-bottom: 20px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0 0 28px;
+      margin-bottom: 34px;
+      border-bottom: 1px solid var(--line);
     }
 
-    h1 {
+    .section-head {
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
       margin: 0 0 10px;
-      font-size: 2.2rem;
+      font-size: 1.9rem;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0;
     }
 
-    p.lead {
-      margin: 0;
+    .section-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
       color: var(--muted);
-      line-height: 1.6;
+      margin-bottom: 10px;
     }
 
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 24px;
     }
 
     .full { grid-column: 1 / -1; }
-    .thirds { grid-template-columns: repeat(3, 1fr); }
 
     label {
       display: block;
       font-weight: 500;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--text);
     }
 
     input, textarea, select {
       width: 100%;
-      padding: 12px;
-      border-radius: 10px;
+      padding: 14px 16px;
+      border-radius: var(--input-radius);
       border: 1px solid var(--line);
       font-family: 'Roboto', sans-serif;
-      font-size: 0.96rem;
-      background: white;
+      font-size: 1rem;
+      background: #fbfaf8;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: rgba(30, 27, 24, 0.34);
+      box-shadow: 0 0 0 3px rgba(30, 27, 24, 0.06);
     }
 
     textarea {
-      min-height: 110px;
+      min-height: 120px;
       resize: vertical;
     }
 
     .inline-options {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 5px;
+      gap: 18px;
+      margin-top: 6px;
     }
 
     .inline-options label {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
       margin-bottom: 0;
       font-weight: 400;
+      font-size: 0.98rem;
     }
 
     .inline-options input[type="radio"] {
       width: auto;
       margin: 0;
+      accent-color: #1e1b18;
     }
 
     .conditional {
-      margin-top: 10px;
+      margin-top: 12px;
       display: none;
+      padding: 14px;
+      border-radius: 6px;
+      background: rgba(30, 27, 24, 0.03);
+      border: 1px solid rgba(30, 27, 24, 0.08);
     }
 
     .conditional.show {
       display: block;
     }
 
-    button {
-      margin-top: 20px;
-      padding: 14px;
+    .sidebar-card {
+      position: sticky;
+      top: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: none;
+      padding: 30px;
+    }
+
+    .sidebar-card h3 {
+      margin: 0 0 16px;
+      font-size: 2rem;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+    }
+
+    .sidebar-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .sidebar-list li {
+      padding: 0;
+      background: transparent;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .contact-box {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .contact-phone {
+      display: inline-block;
+      margin: 10px 0 16px;
+      font-size: 1.35rem;
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    button.submit-button {
+      margin-top: 16px;
+      padding: 18px 18px;
       width: 100%;
-      border: none;
-      border-radius: 12px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
       background: var(--accent);
       color: white;
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 500;
       cursor: pointer;
+      box-shadow: none;
     }
 
     .message {
       margin-top: 12px;
-      color: green;
+      color: #166534;
       font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .footer-note {
+      margin: 0;
+      line-height: 1.8;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 1180px) {
+      .hero,
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sitebar-inner,
+      .wrap {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .site-nav {
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
     }
 
     @media (max-width: 760px) {
-      .form-grid, .thirds { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .sitebar-inner { flex-direction: column; align-items: flex-start; }
+      body { font-size: 18px; }
     }
   </style>
 </head>
 <body>
+  <header class="sitebar">
+    <div class="sitebar-inner">
+      <img src="logo1.png" alt="Welcome Home Properties logo" class="site-logo">
+      <nav class="site-nav">
+        <a href="#">Rentals</a>
+        <a href="#">How to Rent</a>
+        <a href="#">Residents</a>
+        <a href="#">About</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </header>
+
   <div class="wrap">
-    <div class="card">
-      <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-        <img src="logo.png" alt="Company Logo" style="height:60px; width:auto;">
-        <div>
-          <h1 style="margin:0;">Rental Reference Request</h1>
-          <p class="lead">Please complete this form regarding a previous tenant. This information will help us evaluate the applicant's rental history and determine whether we should rent to them.</p>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="hero-kicker">Applicant Screening</div>
+        <h1>Rental Reference Request</h1>
+        <p>Please complete this form regarding a previous tenant. This information helps our office review the applicant’s rental history and decide whether we should move forward with the application.</p>
+      </div>
+      <div class="hero-actions">
+        <button type="button" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'});">COMPLETE FORM</button>
+        <a href="#contact-box" class="ghost-button">QUESTIONS? CONTACT US</a>
+      </div>
+    </section>
+    <div class="app-header">
+      <div class="app-header-inner">
+        <div class="brand-row">
+          <img src="logo1.png" alt="Welcome Home Properties logo" style="height:68px; width:auto;">
+          <div class="brand-copy">
+            <small>Applicant Screening</small>
+            <h1>Rental Reference Request</h1>
+            <p class="lead">Please complete this form regarding a previous tenant. Your response helps us review the applicant’s rental history and make an informed leasing decision.</p>
+          </div>
         </div>
+        <div class="badge">Welcome Home Properties</div>
       </div>
     </div>
 
-    <form id="form">
+    <div class="app-shell">
+      <div class="main-column">
+        <form id="form">
       <div class="card">
-        <h2>Previous Landlord Information</h2>
+        <div class="section-head">
+          <div>
+            <div class="section-label">Section 01</div>
+            <h2>Previous Landlord Information</h2>
+          </div>
+        </div>
         <div class="form-grid">
           <div>
             <label for="landlordName">Name</label>
@@ -197,7 +457,12 @@ Example:
       </div>
 
       <div class="card">
-        <h2>Requesting Tenant Information</h2>
+        <div class="section-head">
+          <div>
+            <div class="section-label">Section 02</div>
+            <h2>Requesting Tenant Information</h2>
+          </div>
+        </div>
         <div class="form-grid">
           <div>
             <label for="tenantName">Tenant name</label>
@@ -346,7 +611,12 @@ Example:
       </div>
 
       <div class="card">
-        <h2>Completed By</h2>
+        <div class="section-head">
+          <div>
+            <div class="section-label">Section 03</div>
+            <h2>Completed By</h2>
+          </div>
+        </div>
         <div class="form-grid">
           <div>
             <label for="completedBy">Completed by</label>
@@ -360,15 +630,30 @@ Example:
       </div>
 
             <div class="card">
-        <p style="margin:0; line-height:1.6; color:#374151;">
-          Thank you for your time! If you have any questions or additional comments, please call us at 509-525-1040 or email our office at office@welcomehps.com
+        <p class="footer-note">
+          Thank you for your time. If you have any questions or additional comments, please call us at 509-525-1040 or email our office at office@welcomehps.com.
         </p>
+
+        <button type="submit" class="submit-button">SUBMIT REFERENCE</button>
+        <div class="message" id="msg"></div>
+      </div>
+        </form>
       </div>
 
-      <button type="submit">Submit Reference</button>
-      <div class="message" id="msg"></div>
-
-    </form>
+      <aside class="card sidebar-card" id="contact-box">
+        <h3>Questions? Contact Us</h3>
+        <a class="contact-phone" href="tel:15095251040">(509) 525-1040</a>
+        <ul class="sidebar-list">
+          <li>Please review the tenant’s dates, rental amount, and agreement details before submitting.</li>
+          <li>Use the follow-up fields whenever more detail is needed for your answer.</li>
+          <li>Complete the final section with your name and today’s date.</li>
+        </ul>
+        <div class="contact-box">
+          <strong style="color:#1e1b18;">Office email</strong><br>
+          office@welcomehps.com
+        </div>
+      </aside>
+    </div>
   </div>
 
   <script>
@@ -402,7 +687,7 @@ Example:
     form.addEventListener('change', updateConditionalFields);
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      msg.textContent = 'Form submitted (backend will be connected later).';
+      msg.textContent = 'Reference captured. Submission delivery can be connected next.';
     });
 
     prefill();
