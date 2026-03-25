@@ -20,6 +20,7 @@
     * { box-sizing: border-box; }
 
     body {
+      font-size: 19px;
       margin: 0;
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 180px);
@@ -213,7 +214,7 @@
               <label><input type="radio" name="latePayments" value="No"> No</label>
             </div>
             <div class="conditional" data-show-when="latePayments:Yes">
-              <label for="latePaymentsCount">If yes, how many?</label>
+              <label for="latePaymentsCount">How many?</label>
               <input id="latePaymentsCount" name="latePaymentsCount">
             </div>
           </div>
@@ -225,7 +226,7 @@
               <label><input type="radio" name="nsfChecks" value="No"> No</label>
             </div>
             <div class="conditional" data-show-when="nsfChecks:Yes">
-              <label for="nsfChecksCount">If yes, how many?</label>
+              <label for="nsfChecksCount">How many?</label>
               <input id="nsfChecksCount" name="nsfChecksCount">
             </div>
           </div>
@@ -237,7 +238,7 @@
               <label><input type="radio" name="leaseViolations" value="No"> No</label>
             </div>
             <div class="conditional" data-show-when="leaseViolations:Yes">
-              <label for="leaseViolationsDetails">If yes, please provide details</label>
+              <label for="leaseViolationsDetails">Please provide details</label>
               <textarea id="leaseViolationsDetails" name="leaseViolationsDetails"></textarea>
             </div>
           </div>
@@ -249,14 +250,14 @@
               <label><input type="radio" name="eviction" value="No"> No</label>
             </div>
             <div class="conditional" data-show-when="eviction:Yes">
-              <label for="evictionWhy">If yes, why?</label>
+              <label for="evictionWhy">Why?</label>
               <textarea id="evictionWhy" name="evictionWhy"></textarea>
             </div>
           </div>
 
           <div>
             <label for="occupants">Number of occupants</label>
-            <input id="occupants" name="occupants">
+            <input id="occupants" name="occupants" type="number" min="0" step="1">
           </div>
           <div class="full">
             <label>Pets?</label>
@@ -265,7 +266,7 @@
               <label><input type="radio" name="pets" value="No"> No</label>
             </div>
             <div class="conditional" data-show-when="pets:Yes">
-              <label for="petsHowMany">If yes, how many?</label>
+              <label for="petsHowMany">How many?</label>
               <input id="petsHowMany" name="petsHowMany">
             </div>
           </div>
@@ -277,7 +278,7 @@
               <label><input type="radio" name="relationshipConnection" value="No"> No</label>
             </div>
             <div class="conditional" data-show-when="relationshipConnection:Yes">
-              <label for="relationshipDetails">If yes, how are you related?</label>
+              <label for="relationshipDetails">How are you related?</label>
               <textarea id="relationshipDetails" name="relationshipDetails"></textarea>
             </div>
           </div>
@@ -289,7 +290,7 @@
               <label><input type="radio" name="goodCondition" value="No"> No</label>
             </div>
             <div class="conditional" data-show-when="goodCondition:No">
-              <label for="goodConditionDetails">If no, please provide details</label>
+              <label for="goodConditionDetails">Please provide details</label>
               <textarea id="goodConditionDetails" name="goodConditionDetails"></textarea>
             </div>
           </div>
@@ -323,15 +324,7 @@
         </div>
       </div>
 
-      <button type="submit">Submit Reference</button>
-      <div class="message" id="msg"></div>
-          <div class="card">
-        <p style="margin:0; line-height:1.6; color:#374151;">
-          Thank you for your time! If you have any questions or additional comments, please call us at 509-525-1040 or email our office at office@welcomehps.com
-        </p>
-      </div>
-
-    </form>
+      </form>
   </div>
 
   <script>
