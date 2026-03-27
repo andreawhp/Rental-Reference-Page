@@ -165,17 +165,16 @@ Example:
     }
 
     .app-shell {
-      display: grid;
-      grid-template-columns: minmax(0, 760px) 420px;
-      gap: 48px;
-      align-items: start;
-      justify-content: center;
+      display: block;
+      max-width: 760px;
+      margin: 0 auto;
     }
 
     .main-column {
       width: 100%;
       max-width: 760px;
       margin: 0 auto;
+      padding-left: 8px;
     }
 
     .card {
@@ -183,8 +182,8 @@ Example:
       border: none;
       border-radius: 0;
       box-shadow: none;
-      padding: 0 0 32px;
-      margin-bottom: 36px;
+      padding: 0 0 44px;
+      margin-bottom: 48px;
       border-bottom: 1px solid var(--line);
     }
 
@@ -204,14 +203,16 @@ Example:
     .section-label {
       display: block;
       font-weight: 500;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      margin-top: 6px;
       font-size: 1rem;
       color: var(--text);
+      line-height: 1.4;
     }
 
     input, textarea, select {
       width: 100%;
-      padding: 14px 16px;
+      padding: 16px 18px;
       border-radius: var(--input-radius);
       border: 1px solid var(--line);
       font-family: 'Roboto', sans-serif;
@@ -219,6 +220,7 @@ Example:
       background: #fbfaf8;
       color: var(--text);
       outline: none;
+      margin-bottom: 0;
       transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
@@ -236,7 +238,8 @@ Example:
       display: flex;
       flex-wrap: wrap;
       gap: 18px;
-      margin-top: 6px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     .inline-options label {
@@ -386,23 +389,56 @@ Example:
     }
 
     @media (max-width: 760px) {
-      .form-grid { grid-template-columns: 1fr; }
+      .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 80px 48px;
+    }
+
+    .form-grid > div {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 32px;
+    }
+
+    .form-grid > div:first-child {
+      margin-top: 0;
+    }
       .sitebar-inner { flex-direction: column; align-items: flex-start; }
       body { font-size: 18px; }
+    }
+  
+
+    #form .form-grid {
+      row-gap: 0 !important;
+    }
+
+    #form .form-grid > div {
+      margin-bottom: 36px !important;
+    }
+
+    #form .form-grid > div.full {
+      margin-bottom: 36px !important;
+    }
+
+    #form .form-grid label {
+      margin-bottom: 14px !important;
+      display: block;
     }
   </style>
 </head>
 <body>
   <header class="sitebar">
     <div class="sitebar-inner">
-      <img src="logo1.png" alt="Welcome Home Properties logo" class="site-logo">
+      <img src="logo1.png" alt=" logo" class="site-logo">
       <h1 class="sitebar-title">Rental Reference Request</h1>
     </div>
   </header>
 
   <div class="wrap">
     </div>
-        <div class="badge">Welcome Home Properties</div>
+        <div class="badge"></div>
       </div>
     </div>
 
@@ -597,19 +633,7 @@ Example:
         </form>
       </div>
 
-      <aside class="card sidebar-card" id="contact-box">
-        <h3>Questions? Contact Us</h3>
-        <a class="contact-phone" href="tel:15095251040">(509) 525-1040</a>
-        <ul class="sidebar-list">
-          <li>Please review the tenant’s dates, rental amount, and agreement details before submitting.</li>
-          <li>Use the follow-up fields whenever more detail is needed for your answer.</li>
-          <li>Complete the final section with your name and today’s date.</li>
-        </ul>
-        <div class="contact-box">
-          <strong style="color:#1e1b18;">Office email</strong><br>
-          office@welcomehps.com
-        </div>
-      </aside>
+      
     </div>
   </div>
 
