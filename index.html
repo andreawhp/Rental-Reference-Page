@@ -177,7 +177,7 @@ Example:
     body.admin-view .app-shell {
       max-width: 1120px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 390px;
+      grid-template-columns: minmax(0, 1fr) 460px;
       gap: 56px;
       align-items: start;
     }
@@ -746,9 +746,9 @@ Example:
           <p id="adminInstructions" class="admin-sidebar-copy" style="display:none;">
             <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
           </p>
-          <button type="button" id="newRequestBtn" class="submit-button" style="margin-top:0; background:#ffffff; color:#1e1b18;">CREATE NEW RENTAL REFERENCE REQUEST</button>
           <button type="button" id="generateLinkBtn" class="submit-button" style="margin-top:0;">GENERATE RENTAL REFERENCE REQUEST LINK</button>
           <button type="button" id="sendEmailBtn" class="submit-button" style="margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
+          <button type="button" id="newRequestBtn" class="submit-button" style="margin-top:12px; background:#ffffff; color:#1e1b18;">CREATE NEW RENTAL REFERENCE REQUEST</button>
           <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
             <label for="generatedLink" style="margin-bottom:10px; display:block;">Prefilled link</label>
             <textarea id="generatedLink" rows="3" readonly style="background:#f3efe9;"></textarea>
