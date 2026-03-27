@@ -177,7 +177,7 @@ Example:
     body.admin-view .app-shell {
       max-width: 1120px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 334px;
+      grid-template-columns: minmax(0, 1fr) 390px;
       gap: 56px;
       align-items: start;
     }
@@ -195,6 +195,7 @@ Example:
       display: block;
       position: sticky;
       top: 132px;
+      margin-top: 132px;
     }
 
     .card {
@@ -467,6 +468,7 @@ Example:
 
       body.admin-view .admin-sidebar {
         position: static;
+        margin-top: 48px;
       }
     }
 
@@ -744,6 +746,7 @@ Example:
           <p id="adminInstructions" class="admin-sidebar-copy" style="display:none;">
             <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
           </p>
+          <button type="button" id="newRequestBtn" class="submit-button" style="margin-top:0; background:#ffffff; color:#1e1b18;">CREATE NEW RENTAL REFERENCE REQUEST</button>
           <button type="button" id="generateLinkBtn" class="submit-button" style="margin-top:0;">GENERATE RENTAL REFERENCE REQUEST LINK</button>
           <button type="button" id="sendEmailBtn" class="submit-button" style="margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
           <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
@@ -764,6 +767,7 @@ Example:
     const adminTools = document.getElementById('adminTools');
     const adminInstructions = document.getElementById('adminInstructions');
     const adminSidebar = document.getElementById('adminSidebar');
+    const newRequestBtn = document.getElementById('newRequestBtn');
     const generateLinkBtn = document.getElementById('generateLinkBtn');
     const sendEmailBtn = document.getElementById('sendEmailBtn');
     const generatedLinkWrap = document.getElementById('generatedLinkWrap');
@@ -858,6 +862,26 @@ office@welcomehps.com`);
       window.location.href = `mailto:${encodeURIComponent(landlordEmail)}?subject=${subject}&body=${body}`;
     }
 
+    function resetAdminRequest() {
+      form.reset();
+      generatedLink.value = '';
+      generatedLinkWrap.style.display = 'none';
+      copyStatus.textContent = '';
+      msg.textContent = '';
+
+      const dateField = form.elements['date'];
+      if (dateField) {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateField.value = `${yyyy}-${mm}-${dd}`;
+      }
+
+      updateConditionalFields();
+      window.history.replaceState({}, '', `${window.location.pathname}?admin=true`);
+    }
+
     function formatSubmissionBody() {
       const fields = [
         ['landlordName', 'Previous landlord name'],
@@ -899,6 +923,10 @@ office@welcomehps.com`);
         })
         .filter(Boolean)
         .join('\n');
+    }
+
+    if (newRequestBtn) {
+      newRequestBtn.addEventListener('click', resetAdminRequest);
     }
 
     if (generateLinkBtn) {
