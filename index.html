@@ -37,15 +37,15 @@ Example:
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f7f4ef;
-      --card: #fdfbf8;
+      --bg: #f4f1eb;
+      --card: #f7f3ed;
       --card-strong: #ffffff;
-      --text: #1e1b18;
-      --muted: #6f685f;
-      --line: rgba(30, 27, 24, 0.16);
-      --accent: #1e1b18;
-      --accent-soft: #efe9e1;
-      --shadow: 0 10px 24px rgba(30, 27, 24, 0.06);
+      --text: #2a2420;
+      --muted: #6e655d;
+      --line: rgba(42, 36, 32, 0.18);
+      --accent: #2a2420;
+      --accent-soft: #ebe4db;
+      --shadow: 0 10px 24px rgba(42, 36, 32, 0.05);
       --radius: 10px;
       --input-radius: 6px;
       --max: 1480px;
@@ -194,7 +194,7 @@ Example:
     .section-head h2 {
       margin: 0 0 10px;
       font-size: 1.9rem;
-      font-family: 'Roboto', sans-serif;
+      font-family: Georgia, serif;
       font-weight: 500;
       letter-spacing: 0;
     }
@@ -219,7 +219,7 @@ Example:
       border: 1px solid var(--line);
       font-family: 'Roboto', sans-serif;
       font-size: 1.125rem;
-      background: #fbfaf8;
+      background: #f8f4ee;
       color: var(--text);
       outline: none;
       margin-bottom: 0;
@@ -306,8 +306,8 @@ Example:
       display: none;
       padding: 14px;
       border-radius: 6px;
-      background: rgba(30, 27, 24, 0.03);
-      border: 1px solid rgba(30, 27, 24, 0.08);
+      background: rgba(42, 36, 32, 0.035);
+      border: 1px solid rgba(42, 36, 32, 0.09);
     }
 
     .conditional.show {
@@ -395,7 +395,14 @@ Example:
       margin: 0;
       line-height: 1.8;
       color: var(--muted);
-      font-size: 1.125rem;
+      font-size: 1rem;
+    }
+
+    .section-divider {
+      max-width: 760px;
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 0 0 32px;
     }
 
     @media (max-width: 1180px) {
@@ -481,7 +488,8 @@ Example:
 
   <div class="wrap">
     <h1 style="font-family: Georgia, serif; font-size: 2.4rem; margin: 24px 0 20px;">Rental Reference Request</h1>
-    <div id="adminInstructions" style="display:none; max-width:760px; margin-bottom:18px; color: var(--muted); line-height:1.7; font-size:1rem;">
+    <hr class="section-divider">
+    <div id="adminInstructions" style="display:none; max-width:760px; margin-top:32px; margin-bottom:18px; color: var(--muted); line-height:1.7;">
       <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
     </div>
     <div id="adminTools" style="display:none; max-width:760px; margin-bottom:28px;">
@@ -493,6 +501,7 @@ Example:
         <div id="copyStatus" class="message"></div>
       </div>
     </div>
+    <hr id="adminDivider" class="section-divider" style="display:none;">
     </div>
 
     <div class="app-shell">
@@ -705,6 +714,7 @@ Example:
     const isAdmin = params.get('admin') === 'true';
     const adminTools = document.getElementById('adminTools');
     const adminInstructions = document.getElementById('adminInstructions');
+    const adminDivider = document.getElementById('adminDivider');
     const generateLinkBtn = document.getElementById('generateLinkBtn');
     const sendEmailBtn = document.getElementById('sendEmailBtn');
     const generatedLinkWrap = document.getElementById('generatedLinkWrap');
@@ -715,6 +725,7 @@ Example:
       if (isAdmin) {
         if (adminTools) adminTools.style.display = 'block';
         if (adminInstructions) adminInstructions.style.display = 'block';
+        if (adminDivider) adminDivider.style.display = 'block';
       }
       params.forEach((val, key) => {
         const field = form.elements[key];
