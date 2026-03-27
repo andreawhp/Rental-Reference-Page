@@ -210,6 +210,9 @@ Example:
     }
 
     input, textarea, select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: textfield;
       width: 100%;
       padding: 16px 18px;
       border-radius: var(--input-radius);
@@ -223,13 +226,24 @@ Example:
       transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
     input:focus, textarea:focus, select:focus {
       border-color: rgba(30, 27, 24, 0.34);
       box-shadow: 0 0 0 3px rgba(30, 27, 24, 0.06);
     }
 
     textarea {
-      min-height: 120px;
+      min-height: auto;
+      height: auto;
       resize: vertical;
     }
 
@@ -244,16 +258,47 @@ Example:
     .inline-options label {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       margin-bottom: 0;
       font-weight: 400;
       font-size: 1.125rem;
+      cursor: pointer;
     }
 
     .inline-options input[type="radio"] {
-      width: auto;
+      appearance: none;
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border: 2px solid #1e1b18;
+      border-radius: 4px;
+      display: inline-block;
       margin: 0;
-      accent-color: #1e1b18;
+      cursor: pointer;
+      background-color: #fff;
+      vertical-align: middle;
+    }
+
+    .inline-options input[type="radio"]:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231e1b18' d='M9 16.2 4.8 12l-1.4 1.4L9 19 20.6 7.4 19.2 6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 16px 16px;
+    }
+
+    .inline-options input[type="radio"]::after {
+      content: "";
+      width: 14px;
+      height: 14px;
+      transform: scale(0);
+      transition: transform 0.12s ease-in-out;
+      background: #1e1b18;
+      -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M9 16.17l-3.88-3.88L4 13.41l5 5 11-11-1.41-1.41z"/></svg>') center / contain no-repeat;
+              mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M9 16.17l-3.88-3.88L4 13.41l5 5 11-11-1.41-1.41z"/></svg>') center / contain no-repeat;
+    }
+
+    .inline-options input[type="radio"]:checked::after {
+      transform: scale(1);
     }
 
     .conditional {
@@ -435,7 +480,15 @@ Example:
   </header>
 
   <div class="wrap">
-    <h1 style="font-family: Georgia, serif; font-size: 2.4rem; margin: 24px 0 32px;">Rental Reference Request</h1>
+    <h1 style="font-family: Georgia, serif; font-size: 2.4rem; margin: 24px 0 20px;">Rental Reference Request</h1>
+    <div id="adminTools" style="display:none; max-width:760px; margin-left:80px; margin-bottom:28px;">
+      <button type="button" id="generateLinkBtn" class="submit-button" style="max-width:320px; margin-top:0;">GENERATE PREFILLED LINK</button>
+      <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
+        <label for="generatedLink" style="margin-bottom:10px; display:block;">Prefilled link</label>
+        <textarea id="generatedLink" rows="3" readonly style="background:#f3efe9;"></textarea>
+        <div id="copyStatus" class="message"></div>
+      </div>
+    </div>
     </div>
         <div class="badge"></div>
       </div>
@@ -445,7 +498,7 @@ Example:
       <div class="main-column">
         <form id="form">
       <div class="card">
-        
+        <h2 style="margin: 0 0 24px; font-family: Georgia, serif; font-size: 1.5rem;">Previous Landlord Information</h2>
         <div class="form-grid">
           <div>
             <label for="landlordName">Name</label>
@@ -459,7 +512,7 @@ Example:
       </div>
 
       <div class="card">
-        
+        <h2 style="margin: 0 0 24px; font-family: Georgia, serif; font-size: 1.5rem;">Application Information</h2>
         <div class="form-grid">
           <div>
             <label for="tenantName">Tenant name</label>
@@ -475,20 +528,28 @@ Example:
             <input id="moveInDate" name="moveInDate" type="date">
           </div>
           <div>
+            <label>Current or past tenant?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="tenantStatus" value="Current"> Current</label>
+              <label><input type="radio" name="tenantStatus" value="Past"> Past</label>
+            </div>
+          </div>
+
+          <div class="full conditional" data-show-when="tenantStatus:Past">
             <label for="moveOutDate">Move-out date</label>
             <input id="moveOutDate" name="moveOutDate" type="date">
           </div>
 
-          <div>
+          <div class="full conditional" data-show-when="tenantStatus:Past">
             <label>Proper move-out notice given?</label>
             <div class="inline-options">
               <label><input type="radio" name="properNotice" value="Yes"> Yes</label>
               <label><input type="radio" name="properNotice" value="No"> No</label>
             </div>
           </div>
-          <div>
+          <div class="full conditional" data-show-when="tenantStatus:Past">
             <label for="moveOutTerms">Move-out terms</label>
-            <input id="moveOutTerms" name="moveOutTerms" placeholder="Example: 30-day notice, mutual agreement, lease end">
+            <input id="moveOutTerms" name="moveOutTerms" placeholder="Example: Give notice 20 days before lease end date.">
           </div>
 
           <div>
@@ -512,7 +573,7 @@ Example:
             </div>
             <div class="conditional" data-show-when="latePayments:Yes">
               <label for="latePaymentsCount">How many?</label>
-              <input id="latePaymentsCount" name="latePaymentsCount">
+              <input id="latePaymentsCount" name="latePaymentsCount" type="number" min="0" step="1">
             </div>
           </div>
 
@@ -524,7 +585,7 @@ Example:
             </div>
             <div class="conditional" data-show-when="nsfChecks:Yes">
               <label for="nsfChecksCount">How many?</label>
-              <input id="nsfChecksCount" name="nsfChecksCount">
+              <input id="nsfChecksCount" name="nsfChecksCount" type="number" min="0" step="1">
             </div>
           </div>
 
@@ -536,7 +597,7 @@ Example:
             </div>
             <div class="conditional" data-show-when="leaseViolations:Yes">
               <label for="leaseViolationsDetails">Please provide details</label>
-              <textarea id="leaseViolationsDetails" name="leaseViolationsDetails"></textarea>
+              <textarea id="leaseViolationsDetails" name="leaseViolationsDetails" rows="2"></textarea>
             </div>
           </div>
 
@@ -547,8 +608,8 @@ Example:
               <label><input type="radio" name="eviction" value="No"> No</label>
             </div>
             <div class="conditional" data-show-when="eviction:Yes">
-              <label for="evictionWhy">Why?</label>
-              <textarea id="evictionWhy" name="evictionWhy"></textarea>
+              <label for="evictionWhy">Please provide details</label>
+              <textarea id="evictionWhy" name="evictionWhy" rows="2"></textarea>
             </div>
           </div>
 
@@ -564,7 +625,7 @@ Example:
             </div>
             <div class="conditional" data-show-when="pets:Yes">
               <label for="petsHowMany">How many?</label>
-              <input id="petsHowMany" name="petsHowMany">
+              <input id="petsHowMany" name="petsHowMany" type="number" min="0" step="1">
             </div>
           </div>
 
@@ -576,7 +637,7 @@ Example:
             </div>
             <div class="conditional" data-show-when="relationshipConnection:Yes">
               <label for="relationshipDetails">How are you related?</label>
-              <textarea id="relationshipDetails" name="relationshipDetails"></textarea>
+              <textarea id="relationshipDetails" name="relationshipDetails" rows="2"></textarea>
             </div>
           </div>
 
@@ -588,7 +649,7 @@ Example:
             </div>
             <div class="conditional" data-show-when="goodCondition:No">
               <label for="goodConditionDetails">Please provide details</label>
-              <textarea id="goodConditionDetails" name="goodConditionDetails"></textarea>
+              <textarea id="goodConditionDetails" name="goodConditionDetails" rows="2"></textarea>
             </div>
           </div>
 
@@ -602,16 +663,16 @@ Example:
 
           <div class="full">
             <label for="otherComments">Other comments</label>
-            <textarea id="otherComments" name="otherComments"></textarea>
+            <textarea id="otherComments" name="otherComments" rows="2"></textarea>
           </div>
         </div>
       </div>
 
       <div class="card">
-        
+        <h2 style="margin: 0 0 24px; font-family: Georgia, serif; font-size: 1.5rem;">Completed By</h2>
         <div class="form-grid">
           <div>
-            <label for="completedBy">Completed by</label>
+            <label for="completedBy">Name</label>
             <input id="completedBy" name="completedBy">
           </div>
           <div>
@@ -639,9 +700,18 @@ Example:
   <script>
     const form = document.getElementById('form');
     const msg = document.getElementById('msg');
+    const params = new URLSearchParams(window.location.search);
+    const isAdmin = params.get('admin') === 'true';
+    const adminTools = document.getElementById('adminTools');
+    const generateLinkBtn = document.getElementById('generateLinkBtn');
+    const generatedLinkWrap = document.getElementById('generatedLinkWrap');
+    const generatedLink = document.getElementById('generatedLink');
+    const copyStatus = document.getElementById('copyStatus');
 
     function prefill() {
-      const params = new URLSearchParams(window.location.search);
+      if (isAdmin && adminTools) {
+        adminTools.style.display = 'block';
+      }
       params.forEach((val, key) => {
         const field = form.elements[key];
         if (!field) return;
@@ -652,6 +722,16 @@ Example:
           field.value = val;
         }
       });
+
+      const dateField = form.elements['date'];
+      if (dateField && !dateField.value) {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateField.value = `${yyyy}-${mm}-${dd}`;
+      }
+
       updateConditionalFields();
     }
 
@@ -662,6 +742,33 @@ Example:
         const show = selected && selected.value === expectedValue;
         section.classList.toggle('show', show);
       });
+    }
+
+    function buildPrefilledLink() {
+      const data = new FormData(form);
+      const nextParams = new URLSearchParams();
+
+      for (const [key, value] of data.entries()) {
+        if (!value || key === 'date') continue;
+        nextParams.set(key, value);
+      }
+
+      const baseUrl = `${window.location.origin}${window.location.pathname}`;
+      const link = `${baseUrl}?${nextParams.toString()}`;
+      generatedLink.value = link;
+      generatedLinkWrap.style.display = 'block';
+
+      navigator.clipboard.writeText(link)
+        .then(() => {
+          copyStatus.textContent = 'Prefilled link copied. Send this link to the landlord.';
+        })
+        .catch(() => {
+          copyStatus.textContent = 'Prefilled link created. Copy it from the box below.';
+        });
+    }
+
+    if (generateLinkBtn) {
+      generateLinkBtn.addEventListener('click', buildPrefilledLink);
     }
 
     form.addEventListener('change', updateConditionalFields);
