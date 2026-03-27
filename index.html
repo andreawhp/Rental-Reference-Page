@@ -166,14 +166,16 @@ Example:
 
     .app-shell {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 420px;
+      grid-template-columns: minmax(0, 760px) 420px;
       gap: 48px;
       align-items: start;
+      justify-content: center;
     }
 
     .main-column {
-      min-width: 0;
+      width: 100%;
       max-width: 760px;
+      margin: 0 auto;
     }
 
     .card {
