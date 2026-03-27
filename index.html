@@ -37,15 +37,15 @@ Example:
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f4f1eb;
-      --card: #f6f2ec;
+      --bg: #f7f5f1;
+      --card: #f7f5f1;
       --card-strong: #ffffff;
-      --text: #2a2420;
-      --muted: #6e655d;
-      --line: rgba(42, 36, 32, 0.22);
-      --accent: #2a2420;
-      --accent-soft: #ebe4db;
-      --shadow: 0 10px 24px rgba(42, 36, 32, 0.05);
+      --text: #2e2a26;
+      --muted: #7f7871;
+      --line: rgba(108, 100, 91, 0.28);
+      --accent: #25201c;
+      --accent-soft: #efebe5;
+      --shadow: 0 8px 18px rgba(42, 36, 32, 0.04);
       --radius: 8px;
       --input-radius: 10px;
       --max: 1480px;
@@ -61,10 +61,17 @@ Example:
       color: var(--text);
     }
 
-    h1, h2, h3 {
+    h1 {
       font-family: Georgia, serif;
       letter-spacing: -0.01em;
       color: var(--text);
+    }
+
+    h2, h3 {
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 0;
+      color: var(--text);
+      font-weight: 400;
     }
 
     .sitebar {
@@ -203,13 +210,13 @@ Example:
       border: none;
       border-radius: 0;
       box-shadow: none;
-      padding: 0 0 44px;
-      margin-bottom: 48px;
+      padding: 0 0 56px;
+      margin-bottom: 56px;
       border-bottom: 1px solid var(--line);
     }
 
     .action-panel {
-      border: 1px solid rgba(42, 36, 32, 0.22);
+      border: 1px solid rgba(108, 100, 91, 0.22);
       border-radius: 8px;
       background: var(--card);
       padding: 18px;
@@ -230,18 +237,18 @@ Example:
     .section-head h2 {
       margin: 0 0 10px;
       font-size: 1.9rem;
-      font-family: Georgia, serif;
-      font-weight: 500;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
       letter-spacing: 0;
     }
 
     .section-label {
       display: block;
-      font-weight: 500;
-      margin-bottom: 10px;
-      margin-top: 6px;
+      font-weight: 400;
+      margin-bottom: 12px;
+      margin-top: 8px;
       font-size: 1rem;
-      color: var(--text);
+      color: var(--muted);
       line-height: 1.4;
     }
 
@@ -252,7 +259,7 @@ Example:
       width: 100%;
       padding: 24px 20px;
       border-radius: var(--input-radius);
-      border: 2px solid rgba(177, 167, 154, 0.75);
+      border: 1px solid rgba(181, 172, 161, 0.9);
       font-family: 'Roboto', sans-serif;
       font-size: 1.2rem;
       background: #ffffff;
@@ -273,8 +280,8 @@ Example:
     }
 
     input:focus, textarea:focus, select:focus {
-      border-color: rgba(150, 140, 128, 0.92);
-      box-shadow: 0 0 0 2px rgba(177, 167, 154, 0.08);
+      border-color: rgba(150, 140, 128, 0.82);
+      box-shadow: 0 0 0 2px rgba(177, 167, 154, 0.06);
     }
 
     textarea {
@@ -285,7 +292,7 @@ Example:
 
     input::placeholder,
     textarea::placeholder {
-      color: #beb5ab;
+      color: #b8b0a7;
       opacity: 1;
     }
 
@@ -348,8 +355,8 @@ Example:
       display: none;
       padding: 14px;
       border-radius: 6px;
-      background: rgba(42, 36, 32, 0.035);
-      border: 1px solid rgba(42, 36, 32, 0.09);
+      background: rgba(108, 100, 91, 0.045);
+      border: 1px solid rgba(108, 100, 91, 0.08);
     }
 
     .conditional.show {
@@ -444,6 +451,11 @@ Example:
       font-size: inherit;
     }
 
+    p {
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
     .section-divider {
       width: 100%;
       max-width: 760px;
@@ -518,16 +530,18 @@ Example:
     }
 
     #form .form-grid > div {
-      margin-bottom: 36px !important;
+      margin-bottom: 44px !important;
     }
 
     #form .form-grid > div.full {
-      margin-bottom: 36px !important;
+      margin-bottom: 44px !important;
     }
 
     #form .form-grid label {
-      margin-bottom: 14px !important;
+      margin-bottom: 16px !important;
       display: block;
+      font-weight: 400;
+      color: var(--muted);
     }
   </style>
 </head>
@@ -547,7 +561,7 @@ Example:
       <div class="main-column">
         <form id="form">
       <div class="card">
-        <h2 style="margin: 0 0 24px; font-family: Georgia, serif; font-size: 1.5rem;">Previous Landlord Information</h2>
+        <h2 style="margin: 0 0 24px; font-size: 1.5rem;">Previous Landlord Information</h2>
         <div class="form-grid">
           <div>
             <label for="landlordName">Name</label>
@@ -561,7 +575,7 @@ Example:
       </div>
 
       <div class="card">
-        <h2 style="margin: 0 0 24px; font-family: Georgia, serif; font-size: 1.5rem;">Application Information</h2>
+        <h2 style="margin: 0 0 24px; font-size: 1.5rem;">Application Information</h2>
         <div class="form-grid">
           <div>
             <label for="tenantName">Tenant name</label>
@@ -718,7 +732,7 @@ Example:
       </div>
 
       <div class="card">
-        <h2 style="margin: 0 0 24px; font-family: Georgia, serif; font-size: 1.5rem;">Completed By</h2>
+        <h2 style="margin: 0 0 24px; font-size: 1.5rem;">Completed By</h2>
         <div class="form-grid">
           <div>
             <label for="completedBy">Name</label>
