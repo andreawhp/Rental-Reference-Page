@@ -717,8 +717,9 @@ Example:
     const copyStatus = document.getElementById('copyStatus');
 
     function prefill() {
-      if (isAdmin && adminTools) {
-        adminTools.style.display = 'block';
+      if (isAdmin) {
+        if (adminTools) adminTools.style.display = 'block';
+        if (adminInstructions) adminInstructions.style.display = 'block';
       }
       if (isAdmin && adminInstructions) {
         adminInstructions.style.display = 'block';
