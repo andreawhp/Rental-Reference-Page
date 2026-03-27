@@ -481,10 +481,10 @@ Example:
 
   <div class="wrap">
     <h1 style="font-family: Georgia, serif; font-size: 2.4rem; margin: 24px 0 20px;">Rental Reference Request</h1>
-    <div id="adminInstructions" style="display:none; max-width:760px; margin-left:80px; margin-bottom:18px; color: var(--muted); line-height:1.7; font-size:1rem;">
+    <div id="adminInstructions" style="display:none; max-width:760px; margin-bottom:18px; color: var(--muted); line-height:1.7; font-size:1rem;">
       <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
     </div>
-    <div id="adminTools" style="display:none; max-width:760px; margin-left:80px; margin-bottom:28px;">
+    <div id="adminTools" style="display:none; max-width:760px; margin-bottom:28px;">
       <button type="button" id="generateLinkBtn" class="submit-button" style="max-width:320px; margin-top:0;">GENERATE PREFILLED LINK</button>
       <button type="button" id="sendEmailBtn" class="submit-button" style="max-width:320px; margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
       <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
@@ -757,7 +757,7 @@ Example:
         nextParams.set(key, value);
       }
 
-      const baseUrl = `${window.location.origin}${window.location.pathname}`;
+      const baseUrl = window.location.href.split('?')[0].split('#')[0];
       const link = `${baseUrl}?${nextParams.toString()}`;
       generatedLink.value = link;
       generatedLinkWrap.style.display = 'block';
@@ -794,7 +794,7 @@ Thank you for your time.
 Welcome Home Properties
 509-525-1040
 office@welcomehps.com`);
-      window.location.href = `mailto:${landlordEmail}?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${encodeURIComponent(landlordEmail)}?subject=${subject}&body=${body}`;
     }
 
     if (generateLinkBtn) {
