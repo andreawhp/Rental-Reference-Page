@@ -244,9 +244,9 @@ Example:
       -webkit-appearance: none;
       -moz-appearance: textfield;
       width: 100%;
-      padding: 16px 18px;
+      padding: 22px 24px;
       border-radius: var(--input-radius);
-      border: 1px solid var(--line);
+      border: 1px solid rgba(42, 36, 32, 0.24);
       font-family: 'Roboto', sans-serif;
       font-size: 1.125rem;
       background: #ffffff;
@@ -267,14 +267,20 @@ Example:
     }
 
     input:focus, textarea:focus, select:focus {
-      border-color: rgba(30, 27, 24, 0.34);
-      box-shadow: 0 0 0 3px rgba(30, 27, 24, 0.06);
+      border-color: rgba(42, 36, 32, 0.38);
+      box-shadow: 0 0 0 2px rgba(42, 36, 32, 0.04);
     }
 
     textarea {
-      min-height: auto;
+      min-height: 210px;
       height: auto;
       resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #b7afa6;
+      opacity: 1;
     }
 
     .inline-options {
