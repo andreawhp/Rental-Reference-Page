@@ -104,6 +104,10 @@ Example:
       padding: 32px 0 72px 80px;
     }
 
+    .page-header {
+      max-width: 760px;
+    }
+
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 420px;
@@ -190,7 +194,7 @@ Example:
     body.admin-view .admin-sidebar {
       display: block;
       position: sticky;
-      top: 110px;
+      top: 132px;
     }
 
     .card {
@@ -207,13 +211,14 @@ Example:
       border: 1px solid rgba(42, 36, 32, 0.22);
       border-radius: 8px;
       background: var(--card);
-      padding: 22px;
+      padding: 18px;
     }
 
     .admin-sidebar-copy {
-      margin: 0 0 18px;
+      margin: 0 0 20px;
       color: var(--muted);
       line-height: 1.7;
+      padding-left: 0;
     }
 
     .section-head {
@@ -410,7 +415,7 @@ Example:
       margin-top: 16px;
       padding: 24px 24px;
       width: 100%;
-      border: 1px solid var(--accent);
+      border: 1.5px solid rgba(42, 36, 32, 0.72);
       border-radius: 6px;
       background: var(--accent);
       color: white;
@@ -532,10 +537,10 @@ Example:
   </header>
 
   <div class="wrap">
-    <h1 style="font-family: Georgia, serif; font-size: 2.4rem; margin: 24px 0 20px;">Rental Reference Request</h1>
-    <hr class="section-divider">
+    <div class="page-header">
+      <h1 style="font-family: Georgia, serif; font-size: 2.4rem; margin: 24px 0 20px;">Rental Reference Request</h1>
+      <hr class="section-divider">
     </div>
-
     <div class="app-shell">
       <div class="main-column">
         <form id="form">
@@ -735,10 +740,10 @@ Example:
         </form>
       </div>
       <aside id="adminSidebar" class="admin-sidebar">
-        <p id="adminInstructions" class="admin-sidebar-copy" style="display:none;">
-          <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
-        </p>
         <div id="adminTools" class="action-panel" style="display:none;">
+          <p id="adminInstructions" class="admin-sidebar-copy" style="display:none;">
+            <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
+          </p>
           <button type="button" id="generateLinkBtn" class="submit-button" style="margin-top:0;">GENERATE RENTAL REFERENCE REQUEST LINK</button>
           <button type="button" id="sendEmailBtn" class="submit-button" style="margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
           <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
