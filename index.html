@@ -170,10 +170,27 @@ Example:
       margin: 48px 0 0;
     }
 
+    body.admin-view .app-shell {
+      max-width: 1180px;
+      display: grid;
+      grid-template-columns: minmax(0, 760px) 360px;
+      gap: 42px;
+      align-items: start;
+    }
+
     .main-column {
       width: 100%;
       max-width: 760px;
-      margin-left: 80px;
+    }
+
+    .admin-sidebar {
+      display: none;
+    }
+
+    body.admin-view .admin-sidebar {
+      display: block;
+      position: sticky;
+      top: 110px;
     }
 
     .card {
@@ -187,11 +204,16 @@ Example:
     }
 
     .action-panel {
-      max-width: 760px;
       border: 1px solid rgba(42, 36, 32, 0.22);
       border-radius: 8px;
       background: var(--card);
       padding: 22px;
+    }
+
+    .admin-sidebar-copy {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.7;
     }
 
     .section-head {
@@ -411,6 +433,7 @@ Example:
     }
 
     .section-divider {
+      width: 100%;
       max-width: 760px;
       border: 0;
       border-top: 1px solid var(--line);
@@ -418,16 +441,20 @@ Example:
     }
 
     @media (max-width: 1180px) {
-      .app-shell {
+      body.admin-view .app-shell {
         grid-template-columns: 1fr;
       }
 
-      .main-column {
+      body.admin-view .main-column {
         max-width: none;
       }
 
       .sidebar-card,
       .sidebar-card h3 {
+        position: static;
+      }
+
+      body.admin-view .admin-sidebar {
         position: static;
       }
     }
@@ -501,19 +528,6 @@ Example:
   <div class="wrap">
     <h1 style="font-family: Georgia, serif; font-size: 2.4rem; margin: 24px 0 20px;">Rental Reference Request</h1>
     <hr class="section-divider">
-    <div id="adminInstructions" style="display:none; max-width:760px; margin-top:48px; margin-bottom:18px; color: var(--muted); line-height:1.7;">
-      <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
-    </div>
-    <div id="adminTools" class="action-panel" style="display:none; margin-bottom:48px;">
-      <button type="button" id="generateLinkBtn" class="submit-button" style="margin-top:0;">GENERATE RENTAL REFERENCE REQUEST LINK</button>
-      <button type="button" id="sendEmailBtn" class="submit-button" style="margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
-      <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
-        <label for="generatedLink" style="margin-bottom:10px; display:block;">Prefilled link</label>
-        <textarea id="generatedLink" rows="3" readonly style="background:#f3efe9;"></textarea>
-        <div id="copyStatus" class="message"></div>
-      </div>
-    </div>
-    <hr id="adminDivider" class="section-divider" style="display:none;">
     </div>
 
     <div class="app-shell">
@@ -714,8 +728,20 @@ Example:
       </div>
         </form>
       </div>
-
-      
+      <aside id="adminSidebar" class="admin-sidebar">
+        <p id="adminInstructions" class="admin-sidebar-copy" style="display:none;">
+          <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
+        </p>
+        <div id="adminTools" class="action-panel" style="display:none;">
+          <button type="button" id="generateLinkBtn" class="submit-button" style="margin-top:0;">GENERATE RENTAL REFERENCE REQUEST LINK</button>
+          <button type="button" id="sendEmailBtn" class="submit-button" style="margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
+          <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
+            <label for="generatedLink" style="margin-bottom:10px; display:block;">Prefilled link</label>
+            <textarea id="generatedLink" rows="3" readonly style="background:#f3efe9;"></textarea>
+            <div id="copyStatus" class="message"></div>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 
@@ -726,7 +752,7 @@ Example:
     const isAdmin = params.get('admin') === 'true';
     const adminTools = document.getElementById('adminTools');
     const adminInstructions = document.getElementById('adminInstructions');
-    const adminDivider = document.getElementById('adminDivider');
+    const adminSidebar = document.getElementById('adminSidebar');
     const generateLinkBtn = document.getElementById('generateLinkBtn');
     const sendEmailBtn = document.getElementById('sendEmailBtn');
     const generatedLinkWrap = document.getElementById('generatedLinkWrap');
@@ -735,9 +761,10 @@ Example:
 
     function prefill() {
       if (isAdmin) {
+        document.body.classList.add('admin-view');
+        if (adminSidebar) adminSidebar.style.display = 'block';
         if (adminTools) adminTools.style.display = 'block';
         if (adminInstructions) adminInstructions.style.display = 'block';
-        if (adminDivider) adminDivider.style.display = 'block';
       }
       params.forEach((val, key) => {
         const field = form.elements[key];
