@@ -37,8 +37,8 @@ Example:
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f7f5f1;
-      --card: #f7f5f1;
+      --bg: #faf8f4;
+      --card: #f9f6f1;
       --card-strong: #ffffff;
       --text: #2e2a26;
       --muted: #7f7871;
@@ -184,7 +184,7 @@ Example:
     body.admin-view .app-shell {
       max-width: 1120px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 460px;
+      grid-template-columns: minmax(0, 1fr) 540px;
       gap: 56px;
       align-items: start;
     }
@@ -319,7 +319,7 @@ Example:
       -webkit-appearance: none;
       width: 24px;
       height: 24px;
-      border: 2px solid #1e1b18;
+      border: 1px solid rgba(181, 172, 161, 0.9);
       border-radius: 4px;
       display: inline-block;
       margin: 0;
@@ -333,6 +333,7 @@ Example:
       background-repeat: no-repeat;
       background-position: center;
       background-size: 16px 16px;
+      border-color: rgba(150, 140, 128, 0.82);
     }
 
     .inline-options input[type="radio"]::after {
@@ -353,10 +354,15 @@ Example:
     .conditional {
       margin-top: 12px;
       display: none;
-      padding: 14px;
-      border-radius: 6px;
-      background: rgba(108, 100, 91, 0.045);
-      border: 1px solid rgba(108, 100, 91, 0.08);
+      padding: 18px;
+      border-radius: 8px;
+      background: var(--card);
+      border: 1px solid rgba(108, 100, 91, 0.22);
+      color: var(--text);
+    }
+
+    .conditional label {
+      color: var(--text) !important;
     }
 
     .conditional.show {
