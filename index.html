@@ -47,7 +47,7 @@ Example:
       --accent-soft: #ebe4db;
       --shadow: 0 10px 24px rgba(42, 36, 32, 0.05);
       --radius: 8px;
-      --input-radius: 6px;
+      --input-radius: 10px;
       --max: 1480px;
     }
 
@@ -76,9 +76,9 @@ Example:
     }
 
     .sitebar-inner {
-      max-width: none;
-      margin: 0;
-      padding: 14px 0 14px 80px;
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 14px 32px;
       display: flex;
       align-items: center;
       gap: 20px;
@@ -99,9 +99,9 @@ Example:
     }
 
     .wrap {
-      max-width: none;
-      margin: 0;
-      padding: 32px 0 72px 80px;
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 32px 32px 72px;
     }
 
     .page-header {
@@ -175,10 +175,10 @@ Example:
     }
 
     body.admin-view .app-shell {
-      max-width: 1180px;
+      max-width: 1120px;
       display: grid;
-      grid-template-columns: minmax(0, 760px) 360px;
-      gap: 42px;
+      grid-template-columns: minmax(0, 1fr) 334px;
+      gap: 56px;
       align-items: start;
     }
 
@@ -249,11 +249,11 @@ Example:
       -webkit-appearance: none;
       -moz-appearance: textfield;
       width: 100%;
-      padding: 22px 24px;
+      padding: 24px 20px;
       border-radius: var(--input-radius);
-      border: 1px solid rgba(42, 36, 32, 0.24);
+      border: 2px solid rgba(177, 167, 154, 0.75);
       font-family: 'Roboto', sans-serif;
-      font-size: 1.125rem;
+      font-size: 1.2rem;
       background: #ffffff;
       color: var(--text);
       outline: none;
@@ -272,19 +272,19 @@ Example:
     }
 
     input:focus, textarea:focus, select:focus {
-      border-color: rgba(42, 36, 32, 0.38);
-      box-shadow: 0 0 0 2px rgba(42, 36, 32, 0.04);
+      border-color: rgba(150, 140, 128, 0.92);
+      box-shadow: 0 0 0 2px rgba(177, 167, 154, 0.08);
     }
 
     textarea {
-      min-height: 210px;
+      min-height: 240px;
       height: auto;
       resize: vertical;
     }
 
     input::placeholder,
     textarea::placeholder {
-      color: #b7afa6;
+      color: #beb5ab;
       opacity: 1;
     }
 
