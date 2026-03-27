@@ -219,7 +219,7 @@ Example:
       border: 1px solid var(--line);
       font-family: 'Roboto', sans-serif;
       font-size: 1.125rem;
-      background: #f8f4ee;
+      background: #ffffff;
       color: var(--text);
       outline: none;
       margin-bottom: 0;
@@ -492,7 +492,7 @@ Example:
     <div id="adminInstructions" style="display:none; max-width:760px; margin-top:32px; margin-bottom:18px; color: var(--muted); line-height:1.7;">
       <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
     </div>
-    <div id="adminTools" style="display:none; max-width:760px; margin-bottom:28px;">
+    <div id="adminTools" style="display:none; max-width:760px; margin-bottom:48px;">
       <button type="button" id="generateLinkBtn" class="submit-button" style="margin-top:0;">GENERATE RENTAL REFERENCE REQUEST LINK</button>
       <button type="button" id="sendEmailBtn" class="submit-button" style="margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
       <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
@@ -808,6 +808,49 @@ office@welcomehps.com`);
       window.location.href = `mailto:${encodeURIComponent(landlordEmail)}?subject=${subject}&body=${body}`;
     }
 
+    function formatSubmissionBody() {
+      const fields = [
+        ['landlordName', 'Previous landlord name'],
+        ['email', 'Previous landlord email'],
+        ['tenantName', 'Tenant name'],
+        ['previousAddress', 'Previous rental address'],
+        ['moveInDate', 'Move-in date'],
+        ['tenantStatus', 'Current or past tenant'],
+        ['moveOutDate', 'Move-out date'],
+        ['properNotice', 'Proper move-out notice given'],
+        ['moveOutTerms', 'Move-out terms'],
+        ['rentAmount', 'Rent amount'],
+        ['rentalAgreement', 'Rental agreement'],
+        ['latePayments', 'Late payments'],
+        ['latePaymentsCount', 'Late payments count'],
+        ['nsfChecks', 'NSF checks'],
+        ['nsfChecksCount', 'NSF checks count'],
+        ['leaseViolations', 'Lease violations'],
+        ['leaseViolationsDetails', 'Lease violations details'],
+        ['eviction', 'Eviction'],
+        ['evictionWhy', 'Eviction details'],
+        ['occupants', 'Number of occupants'],
+        ['pets', 'Pets'],
+        ['petsHowMany', 'Number of pets'],
+        ['relationshipConnection', 'Friend, coworker, or related'],
+        ['relationshipDetails', 'Relationship details'],
+        ['goodCondition', 'Property left in good condition'],
+        ['goodConditionDetails', 'Condition details'],
+        ['rentAgain', 'Would rent again'],
+        ['otherComments', 'Other comments'],
+        ['completedBy', 'Completed by'],
+        ['date', 'Date completed']
+      ];
+
+      return fields
+        .map(([name, label]) => {
+          const value = form.elements[name]?.value?.trim();
+          return value ? `${label}: ${value}` : null;
+        })
+        .filter(Boolean)
+        .join('\n');
+    }
+
     if (generateLinkBtn) {
       generateLinkBtn.addEventListener('click', buildPrefilledLink);
     }
@@ -819,7 +862,14 @@ office@welcomehps.com`);
     form.addEventListener('change', updateConditionalFields);
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      msg.textContent = 'Reference captured. Submission delivery can be connected next.';
+      const tenantName = form.elements['tenantName']?.value?.trim();
+      const subjectLine = tenantName
+        ? `Rental Reference Response - ${tenantName}`
+        : 'Rental Reference Response';
+      const body = encodeURIComponent(`A rental reference form has been completed.\n\n${formatSubmissionBody()}`);
+
+      msg.textContent = 'Opening email draft to office@welcomehps.com.';
+      window.location.href = `mailto:office@welcomehps.com?subject=${encodeURIComponent(subjectLine)}&body=${body}`;
     });
 
     prefill();
