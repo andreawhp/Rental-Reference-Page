@@ -487,8 +487,6 @@ Example:
     <div id="adminTools" style="display:none; max-width:760px; margin-left:80px; margin-bottom:28px;">
       <button type="button" id="generateLinkBtn" class="submit-button" style="max-width:320px; margin-top:0;">GENERATE PREFILLED LINK</button>
       <button type="button" id="sendEmailBtn" class="submit-button" style="max-width:320px; margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
-      <button type="button" id="generateLinkBtn" class="submit-button" style="max-width:320px; margin-top:0;">GENERATE PREFILLED LINK</button>
-      <button type="button" id="sendEmailBtn" class="submit-button" style="max-width:320px; margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
       <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
         <label for="generatedLink" style="margin-bottom:10px; display:block;">Prefilled link</label>
         <textarea id="generatedLink" rows="3" readonly style="background:#f3efe9;"></textarea>
@@ -707,11 +705,7 @@ Example:
     const isAdmin = params.get('admin') === 'true';
     const adminTools = document.getElementById('adminTools');
     const adminInstructions = document.getElementById('adminInstructions');
-    const adminInstructions = document.getElementById('adminInstructions');
-    const adminInstructions = document.getElementById('adminInstructions');
     const generateLinkBtn = document.getElementById('generateLinkBtn');
-    const sendEmailBtn = document.getElementById('sendEmailBtn');
-    const sendEmailBtn = document.getElementById('sendEmailBtn');
     const sendEmailBtn = document.getElementById('sendEmailBtn');
     const generatedLinkWrap = document.getElementById('generatedLinkWrap');
     const generatedLink = document.getElementById('generatedLink');
@@ -721,12 +715,6 @@ Example:
       if (isAdmin) {
         if (adminTools) adminTools.style.display = 'block';
         if (adminInstructions) adminInstructions.style.display = 'block';
-      }
-      if (isAdmin && adminInstructions) {
-        adminInstructions.style.display = 'block';
-      }
-      if (isAdmin && adminInstructions) {
-        adminInstructions.style.display = 'block';
       }
       params.forEach((val, key) => {
         const field = form.elements[key];
@@ -809,64 +797,8 @@ office@welcomehps.com`);
       window.location.href = `mailto:${landlordEmail}?subject=${subject}&body=${body}`;
     }
 
-    function sendEmailDraft() {
-      const landlordEmail = form.elements['email']?.value?.trim();
-      if (!landlordEmail) {
-        generatedLinkWrap.style.display = 'block';
-        copyStatus.textContent = 'Enter the previous landlord email address first.';
-        return;
-      }
-
-      const link = generatedLink.value || buildPrefilledLink();
-      const subject = encodeURIComponent('Rental Reference Request');
-      const body = encodeURIComponent(`Hello,
-
-Please complete the rental reference form using the link below:
-
-${link}
-
-Thank you for your time.
-
-Welcome Home Properties
-509-525-1040
-office@welcomehps.com`);
-      window.location.href = `mailto:${encodeURIComponent(landlordEmail)}?subject=${subject}&body=${body}`;
-    }
-
     if (generateLinkBtn) {
       generateLinkBtn.addEventListener('click', buildPrefilledLink);
-    }
-
-    function sendEmailDraft() {
-      const landlordEmail = form.elements['email']?.value?.trim();
-      if (!landlordEmail) {
-        generatedLinkWrap.style.display = 'block';
-        copyStatus.textContent = 'Enter the previous landlord email address first.';
-        return;
-      }
-
-      const link = generatedLink.value || buildPrefilledLink();
-      const subject = encodeURIComponent('Rental Reference Request');
-      const body = encodeURIComponent(`Hello,
-
-Please complete the rental reference form using the link below:
-
-${link}
-
-Thank you for your time.
-
-Welcome Home Properties
-509-525-1040
-office@welcomehps.com`);
-      window.location.href = `mailto:${encodeURIComponent(landlordEmail)}?subject=${subject}&body=${body}`;
-    }
-
-    if (sendEmailBtn) {
-      sendEmailBtn.addEventListener('click', sendEmailDraft);
-    }
-
-    if (sendEmailBtn) {
-      sendEmailBtn.addEventListener('click', sendEmailDraft);
     }
 
     if (sendEmailBtn) {
@@ -883,4 +815,3 @@ office@welcomehps.com`);
   </script>
 </body>
 </html>
-
