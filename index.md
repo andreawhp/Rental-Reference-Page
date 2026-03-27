@@ -1,0 +1,975 @@
+<!--
+PREFILL LINK GUIDE
+
+Use these field names in URL:
+landlordName
+email (use %40 instead of @)
+tenantName
+previousAddress
+moveInDate (YYYY-MM-DD)
+moveOutDate (YYYY-MM-DD)
+moveOutTerms
+rentAmount
+rentalAgreement
+occupants
+latePayments (Yes/No)
+nsfChecks (Yes/No)
+leaseViolations (Yes/No)
+eviction (Yes/No)
+pets (Yes/No)
+relationshipConnection (Yes/No)
+goodCondition (Yes/No)
+rentAgain (Yes/No)
+
+Formatting:
+Space = %20
+@ = %40
+
+Example:
+?tenantName=John%20Doe&email=test%40email.com
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rental Reference Request</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f4;
+      --card: #f9f6f1;
+      --card-strong: #ffffff;
+      --text: #2e2a26;
+      --muted: #7f7871;
+      --line: rgba(108, 100, 91, 0.28);
+      --accent: #25201c;
+      --accent-soft: #efebe5;
+      --shadow: 0 8px 18px rgba(42, 36, 32, 0.04);
+      --radius: 8px;
+      --input-radius: 10px;
+      --max: 1480px;
+      --header-height: 92px;
+      --admin-title-gap: 56px;
+      --admin-sidebar-shift: 116px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-size: 21px;
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    h2, h3 {
+      font-family: 'Lato', sans-serif;
+      letter-spacing: 0;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .sitebar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .sitebar-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    body.admin-view .sitebar-inner {
+      max-width: 1400px;
+    }
+
+    .site-logo {
+      height: 64px;
+      width: auto;
+      display: block;
+    }
+
+    .sitebar-title {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 32px 32px 72px;
+    }
+
+    body.admin-view .wrap {
+      max-width: 1400px;
+    }
+
+    .page-header {
+      max-width: 760px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 54px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      line-height: 1;
+    }
+
+    .hero-kicker {
+      margin: 0 0 20px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 880px;
+    }
+
+    .hero-actions {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-actions button,
+    .ghost-button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px 18px;
+      border-radius: 4px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+
+    .ghost-button {
+      background: transparent;
+      color: var(--text);
+    }
+
+    .app-shell {
+      display: block;
+      max-width: 760px;
+      margin: 48px 0 0;
+    }
+
+    body.admin-view .app-shell {
+      max-width: 1300px;
+      display: grid;
+      grid-template-columns: minmax(0, 760px) 540px;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .main-column {
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .admin-sidebar {
+      display: none;
+    }
+
+    body.admin-view .admin-sidebar {
+      display: block;
+      position: sticky;
+      top: calc(var(--header-height) + var(--admin-title-gap));
+      margin-top: calc(-1 * var(--admin-sidebar-shift));
+    }
+
+    .card {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0 0 56px;
+      margin-bottom: 56px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .action-panel {
+      border: 1px solid rgba(108, 100, 91, 0.22);
+      border-radius: 8px;
+      background: var(--card);
+      padding: 32px 26px 40px;
+    }
+
+    .section-head {
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 10px;
+      font-size: 1.9rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .section-label {
+      display: block;
+      font-weight: 400;
+      margin-bottom: 12px;
+      margin-top: 8px;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    input, textarea, select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: textfield;
+      width: 100%;
+      padding: 24px 20px;
+      border-radius: var(--input-radius);
+      border: 1px solid rgba(181, 172, 161, 0.9);
+      font-family: 'Lato', sans-serif;
+      font-size: 1.2rem;
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      margin-bottom: 0;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: rgba(150, 140, 128, 0.82);
+      box-shadow: 0 0 0 2px rgba(177, 167, 154, 0.06);
+    }
+
+    textarea {
+      min-height: 240px;
+      height: auto;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #b8b0a7;
+      opacity: 1;
+    }
+
+    .inline-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .inline-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0;
+      font-weight: 400;
+      font-size: 1.125rem;
+      cursor: pointer;
+    }
+
+    .inline-options input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border: 1px solid rgba(181, 172, 161, 0.9);
+      border-radius: 4px;
+      display: inline-block;
+      margin: 0;
+      cursor: pointer;
+      background-color: #fff;
+      vertical-align: middle;
+    }
+
+    .inline-options input[type="radio"]:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231e1b18' d='M9 16.2 4.8 12l-1.4 1.4L9 19 20.6 7.4 19.2 6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 16px 16px;
+      border-color: rgba(150, 140, 128, 0.82);
+    }
+
+    .inline-options input[type="radio"]::after {
+      content: "";
+      width: 14px;
+      height: 14px;
+      transform: scale(0);
+      transition: transform 0.12s ease-in-out;
+      background: #1e1b18;
+      -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M9 16.17l-3.88-3.88L4 13.41l5 5 11-11-1.41-1.41z"/></svg>') center / contain no-repeat;
+              mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M9 16.17l-3.88-3.88L4 13.41l5 5 11-11-1.41-1.41z"/></svg>') center / contain no-repeat;
+    }
+
+    .inline-options input[type="radio"]:checked::after {
+      transform: scale(1);
+    }
+
+    .conditional {
+      margin-top: 12px;
+      display: none;
+      padding: 18px;
+      border-radius: 8px;
+      background: var(--card);
+      border: 1px solid rgba(108, 100, 91, 0.22);
+      color: var(--text);
+    }
+
+    .conditional label {
+      color: var(--text) !important;
+    }
+
+    .conditional.show {
+      display: block;
+    }
+
+    .sidebar-card {
+      position: sticky;
+      top: 96px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 0;
+      box-shadow: none;
+      padding: 30px;
+    }
+
+    .sidebar-card h3 {
+      position: sticky;
+      top: 96px;
+      margin: 0 0 16px;
+      font-size: 2rem;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      background: var(--card);
+      padding-bottom: 10px;
+      z-index: 2;
+    }
+
+    .sidebar-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .sidebar-list li {
+      padding: 0;
+      background: transparent;
+      font-size: 1.125rem;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .contact-box {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .contact-phone {
+      display: inline-block;
+      margin: 10px 0 16px;
+      font-size: 1.35rem;
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    button.submit-button {
+      margin-top: 16px;
+      padding: 24px 24px;
+      width: 100%;
+      border: 1.5px solid rgba(42, 36, 32, 0.72);
+      border-radius: 6px;
+      background: var(--accent);
+      color: white;
+      font-size: 1.15rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: none;
+      font-family: 'Lato', sans-serif;
+      text-align: center;
+    }
+
+    .message {
+      margin-top: 12px;
+      color: #166534;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .footer-note {
+      margin: 0;
+      line-height: 1.8;
+      color: var(--muted);
+      font-size: inherit;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .section-divider {
+      width: 100%;
+      max-width: 760px;
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 0;
+    }
+
+    @media (max-width: 1180px) {
+      body.admin-view .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      body.admin-view .main-column {
+        max-width: none;
+      }
+
+      .sidebar-card,
+      .sidebar-card h3 {
+        position: static;
+      }
+
+      body.admin-view .admin-sidebar {
+        position: static;
+        margin-top: 48px;
+      }
+    }
+
+      .sidebar-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sitebar-inner,
+      .wrap {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .site-nav {
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 80px 48px;
+    }
+
+    .form-grid > div {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 32px;
+    }
+
+    .form-grid > div:first-child {
+      margin-top: 0;
+    }
+      .sitebar-inner { flex-direction: column; align-items: flex-start; }
+      body { font-size: 18px; }
+    }
+  
+
+    #form .form-grid {
+      row-gap: 0 !important;
+    }
+
+    #form .form-grid > div {
+      margin-bottom: 44px !important;
+    }
+
+    #form .form-grid > div.full {
+      margin-bottom: 44px !important;
+    }
+
+    #form .form-grid label {
+      margin-bottom: 16px !important;
+      display: block;
+      font-weight: 400;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header class="sitebar">
+    <div class="sitebar-inner">
+      <img src="logo.png" alt="Welcome Home Properties logo" class="site-logo">
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="page-header">
+      <h1 style="font-family: Georgia, serif; font-size: 2.4rem; margin: 24px 0 20px;">Rental Reference Request</h1>
+      <hr class="section-divider">
+    </div>
+    <div class="app-shell">
+      <div class="main-column">
+        <form id="form">
+      <div class="card">
+        <h2 style="margin: 0 0 24px; font-size: 1.5rem;">Previous Landlord Information</h2>
+        <div class="form-grid">
+          <div>
+            <label for="landlordName">Name</label>
+            <input id="landlordName" name="landlordName">
+          </div>
+          <div>
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin: 0 0 24px; font-size: 1.5rem;">Application Information</h2>
+        <div class="form-grid">
+          <div>
+            <label for="tenantName">Tenant name</label>
+            <input id="tenantName" name="tenantName">
+          </div>
+          <div>
+            <label for="previousAddress">Previous rental address</label>
+            <input id="previousAddress" name="previousAddress">
+          </div>
+
+          <div>
+            <label for="moveInDate">Move-in date</label>
+            <input id="moveInDate" name="moveInDate" type="date">
+          </div>
+          <div>
+            <label>Current or past tenant?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="tenantStatus" value="Current"> Current</label>
+              <label><input type="radio" name="tenantStatus" value="Past"> Past</label>
+            </div>
+          </div>
+
+          <div class="full conditional" data-show-when="tenantStatus:Past">
+            <label for="moveOutDate">Move-out date</label>
+            <input id="moveOutDate" name="moveOutDate" type="date">
+          </div>
+
+          <div class="full conditional" data-show-when="tenantStatus:Past">
+            <label>Proper move-out notice given?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="properNotice" value="Yes"> Yes</label>
+              <label><input type="radio" name="properNotice" value="No"> No</label>
+            </div>
+          </div>
+          <div class="full conditional" data-show-when="tenantStatus:Past">
+            <label for="moveOutTerms">Move-out terms</label>
+            <input id="moveOutTerms" name="moveOutTerms" placeholder="Example: Give notice 20 days before lease end date.">
+          </div>
+
+          <div>
+            <label for="rentAmount">Rent amount</label>
+            <input id="rentAmount" name="rentAmount" placeholder="$1,850">
+          </div>
+          <div>
+            <label for="rentalAgreement">Rental agreement</label>
+            <select id="rentalAgreement" name="rentalAgreement">
+              <option value="">Select one</option>
+              <option value="Lease">Lease</option>
+              <option value="Month-to-month">Month-to-month</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label>Late payments?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="latePayments" value="Yes"> Yes</label>
+              <label><input type="radio" name="latePayments" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="latePayments:Yes">
+              <label for="latePaymentsCount">How many?</label>
+              <input id="latePaymentsCount" name="latePaymentsCount" type="number" min="0" step="1">
+            </div>
+          </div>
+
+          <div class="full">
+            <label>NSF checks?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="nsfChecks" value="Yes"> Yes</label>
+              <label><input type="radio" name="nsfChecks" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="nsfChecks:Yes">
+              <label for="nsfChecksCount">How many?</label>
+              <input id="nsfChecksCount" name="nsfChecksCount" type="number" min="0" step="1">
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Lease violations?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="leaseViolations" value="Yes"> Yes</label>
+              <label><input type="radio" name="leaseViolations" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="leaseViolations:Yes">
+              <label for="leaseViolationsDetails">Please provide details</label>
+              <textarea id="leaseViolationsDetails" name="leaseViolationsDetails" rows="2"></textarea>
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Eviction?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="eviction" value="Yes"> Yes</label>
+              <label><input type="radio" name="eviction" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="eviction:Yes">
+              <label for="evictionWhy">Please provide details</label>
+              <textarea id="evictionWhy" name="evictionWhy" rows="2"></textarea>
+            </div>
+          </div>
+
+          <div>
+            <label for="occupants">Number of occupants</label>
+            <input id="occupants" name="occupants" type="number" min="0" step="1">
+          </div>
+          <div class="full">
+            <label>Pets?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="pets" value="Yes"> Yes</label>
+              <label><input type="radio" name="pets" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="pets:Yes">
+              <label for="petsHowMany">How many?</label>
+              <input id="petsHowMany" name="petsHowMany" type="number" min="0" step="1">
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Are you a friend, coworker, or related to the previous tenant?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="relationshipConnection" value="Yes"> Yes</label>
+              <label><input type="radio" name="relationshipConnection" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="relationshipConnection:Yes">
+              <label for="relationshipDetails">How are you related?</label>
+              <textarea id="relationshipDetails" name="relationshipDetails" rows="2"></textarea>
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Was the property left in good condition?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="goodCondition" value="Yes"> Yes</label>
+              <label><input type="radio" name="goodCondition" value="No"> No</label>
+            </div>
+            <div class="conditional" data-show-when="goodCondition:No">
+              <label for="goodConditionDetails">Please provide details</label>
+              <textarea id="goodConditionDetails" name="goodConditionDetails" rows="2"></textarea>
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Would you rent to this tenant again?</label>
+            <div class="inline-options">
+              <label><input type="radio" name="rentAgain" value="Yes"> Yes</label>
+              <label><input type="radio" name="rentAgain" value="No"> No</label>
+            </div>
+          </div>
+
+          <div class="full">
+            <label for="otherComments">Other comments</label>
+            <textarea id="otherComments" name="otherComments" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin: 0 0 24px; font-size: 1.5rem;">Completed By</h2>
+        <div class="form-grid">
+          <div>
+            <label for="completedBy">Name</label>
+            <input id="completedBy" name="completedBy">
+          </div>
+          <div>
+            <label for="date">Date completed</label>
+            <input id="date" name="date" type="date">
+          </div>
+        </div>
+      </div>
+
+            <div class="card">
+        <p class="footer-note">
+          Thank you for your time. If you have any questions or additional comments, please call us at 509-525-1040 or email our office at office@welcomehps.com.
+        </p>
+
+        <button type="submit" class="submit-button">SUBMIT REFERENCE</button>
+        <div class="message" id="msg"></div>
+      </div>
+        </form>
+      </div>
+      <aside id="adminSidebar" class="admin-sidebar">
+        <div id="adminTools" class="action-panel" style="display:none;">
+          <button type="button" id="generateLinkBtn" class="submit-button" style="margin-top:0; width:100%;">GENERATE RENTAL REFERENCE REQUEST LINK</button>
+          <button type="button" id="sendEmailBtn" class="submit-button" style="margin-top:18px; width:100%; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
+          <button type="button" id="newRequestBtn" class="submit-button" style="margin-top:18px; width:100%; background:#ffffff; color:#1e1b18;">CREATE NEW RENTAL REFERENCE REQUEST</button>
+          <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
+            <label for="generatedLink" style="margin-bottom:10px; display:block;">Prefilled link</label>
+            <textarea id="generatedLink" rows="3" readonly style="background:#f3efe9;"></textarea>
+            <div id="copyStatus" class="message"></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form');
+    const msg = document.getElementById('msg');
+    const params = new URLSearchParams(window.location.search);
+    const isAdmin = params.get('admin') === 'true';
+    const adminTools = document.getElementById('adminTools');
+    const adminSidebar = document.getElementById('adminSidebar');
+    const newRequestBtn = document.getElementById('newRequestBtn');
+    const generateLinkBtn = document.getElementById('generateLinkBtn');
+    const sendEmailBtn = document.getElementById('sendEmailBtn');
+    const generatedLinkWrap = document.getElementById('generatedLinkWrap');
+    const generatedLink = document.getElementById('generatedLink');
+    const copyStatus = document.getElementById('copyStatus');
+
+    function prefill() {
+      if (isAdmin) {
+        document.body.classList.add('admin-view');
+        if (adminSidebar) adminSidebar.style.display = 'block';
+        if (adminTools) adminTools.style.display = 'block';
+      }
+      params.forEach((val, key) => {
+        const field = form.elements[key];
+        if (!field) return;
+        if (field instanceof RadioNodeList) {
+          const target = form.querySelector(`input[name="${key}"][value="${val}"]`);
+          if (target) target.checked = true;
+        } else {
+          field.value = val;
+        }
+      });
+
+      const dateField = form.elements['date'];
+      if (dateField && !dateField.value) {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateField.value = `${yyyy}-${mm}-${dd}`;
+      }
+
+      updateConditionalFields();
+    }
+
+    function updateConditionalFields() {
+      document.querySelectorAll('.conditional').forEach(section => {
+        const [fieldName, expectedValue] = section.dataset.showWhen.split(':');
+        const selected = form.querySelector(`input[name="${fieldName}"]:checked`);
+        const show = selected && selected.value === expectedValue;
+        section.classList.toggle('show', show);
+      });
+    }
+
+    function buildPrefilledLink() {
+      const data = new FormData(form);
+      const nextParams = new URLSearchParams();
+
+      for (const [key, value] of data.entries()) {
+        if (!value || key === 'date') continue;
+        nextParams.set(key, value);
+      }
+
+      const baseUrl = window.location.href.split('?')[0].split('#')[0];
+      const link = `${baseUrl}?${nextParams.toString()}`;
+      generatedLink.value = link;
+      generatedLinkWrap.style.display = 'block';
+
+      navigator.clipboard.writeText(link)
+        .then(() => {
+          copyStatus.textContent = 'Prefilled link copied. Send this link to the landlord.';
+        })
+        .catch(() => {
+          copyStatus.textContent = 'Prefilled link created. Copy it from the box below.';
+        });
+
+      return link;
+    }
+
+    function sendEmailDraft() {
+      const landlordEmail = form.elements['email']?.value?.trim();
+      if (!landlordEmail) {
+        generatedLinkWrap.style.display = 'block';
+        copyStatus.textContent = 'Enter the previous landlord email address first.';
+        return;
+      }
+
+      const link = generatedLink.value || buildPrefilledLink();
+      const subject = encodeURIComponent('Rental Reference Request');
+      const body = encodeURIComponent(`Hello,
+
+Please complete the rental reference form using the link below:
+
+${link}
+
+Thank you for your time.
+
+Welcome Home Properties
+509-525-1040
+office@welcomehps.com`);
+      window.location.href = `mailto:${encodeURIComponent(landlordEmail)}?subject=${subject}&body=${body}`;
+    }
+
+    function resetAdminRequest() {
+      form.reset();
+      generatedLink.value = '';
+      generatedLinkWrap.style.display = 'none';
+      copyStatus.textContent = '';
+      msg.textContent = '';
+
+      const dateField = form.elements['date'];
+      if (dateField) {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateField.value = `${yyyy}-${mm}-${dd}`;
+      }
+
+      updateConditionalFields();
+      window.history.replaceState({}, '', `${window.location.pathname}?admin=true`);
+    }
+
+    function formatSubmissionBody() {
+      const fields = [
+        ['landlordName', 'Previous landlord name'],
+        ['email', 'Previous landlord email'],
+        ['tenantName', 'Tenant name'],
+        ['previousAddress', 'Previous rental address'],
+        ['moveInDate', 'Move-in date'],
+        ['tenantStatus', 'Current or past tenant'],
+        ['moveOutDate', 'Move-out date'],
+        ['properNotice', 'Proper move-out notice given'],
+        ['moveOutTerms', 'Move-out terms'],
+        ['rentAmount', 'Rent amount'],
+        ['rentalAgreement', 'Rental agreement'],
+        ['latePayments', 'Late payments'],
+        ['latePaymentsCount', 'Late payments count'],
+        ['nsfChecks', 'NSF checks'],
+        ['nsfChecksCount', 'NSF checks count'],
+        ['leaseViolations', 'Lease violations'],
+        ['leaseViolationsDetails', 'Lease violations details'],
+        ['eviction', 'Eviction'],
+        ['evictionWhy', 'Eviction details'],
+        ['occupants', 'Number of occupants'],
+        ['pets', 'Pets'],
+        ['petsHowMany', 'Number of pets'],
+        ['relationshipConnection', 'Friend, coworker, or related'],
+        ['relationshipDetails', 'Relationship details'],
+        ['goodCondition', 'Property left in good condition'],
+        ['goodConditionDetails', 'Condition details'],
+        ['rentAgain', 'Would rent again'],
+        ['otherComments', 'Other comments'],
+        ['completedBy', 'Completed by'],
+        ['date', 'Date completed']
+      ];
+
+      return fields
+        .map(([name, label]) => {
+          const value = form.elements[name]?.value?.trim();
+          return value ? `${label}: ${value}` : null;
+        })
+        .filter(Boolean)
+        .join('\n');
+    }
+
+    if (newRequestBtn) {
+      newRequestBtn.addEventListener('click', resetAdminRequest);
+    }
+
+    if (generateLinkBtn) {
+      generateLinkBtn.addEventListener('click', buildPrefilledLink);
+    }
+
+    if (sendEmailBtn) {
+      sendEmailBtn.addEventListener('click', sendEmailDraft);
+    }
+
+    form.addEventListener('change', updateConditionalFields);
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const tenantName = form.elements['tenantName']?.value?.trim();
+      const subjectLine = tenantName
+        ? `Rental Reference Response - ${tenantName}`
+        : 'Rental Reference Response';
+      const body = encodeURIComponent(`A rental reference form has been completed.\n\n${formatSubmissionBody()}`);
+
+      msg.textContent = 'Opening email draft to office@welcomehps.com.';
+      window.location.href = `mailto:office@welcomehps.com?subject=${encodeURIComponent(subjectLine)}&body=${body}`;
+    });
+
+    prefill();
+  </script>
+</body>
+</html>
