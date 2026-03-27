@@ -38,15 +38,15 @@ Example:
   <style>
     :root {
       --bg: #f4f1eb;
-      --card: #f7f3ed;
+      --card: #f6f2ec;
       --card-strong: #ffffff;
       --text: #2a2420;
       --muted: #6e655d;
-      --line: rgba(42, 36, 32, 0.18);
+      --line: rgba(42, 36, 32, 0.22);
       --accent: #2a2420;
       --accent-soft: #ebe4db;
       --shadow: 0 10px 24px rgba(42, 36, 32, 0.05);
-      --radius: 10px;
+      --radius: 8px;
       --input-radius: 6px;
       --max: 1480px;
     }
@@ -167,7 +167,7 @@ Example:
     .app-shell {
       display: block;
       max-width: 760px;
-      margin: 0;
+      margin: 48px 0 0;
     }
 
     .main-column {
@@ -184,6 +184,14 @@ Example:
       padding: 0 0 44px;
       margin-bottom: 48px;
       border-bottom: 1px solid var(--line);
+    }
+
+    .action-panel {
+      max-width: 760px;
+      border: 1px solid rgba(42, 36, 32, 0.22);
+      border-radius: 8px;
+      background: var(--card);
+      padding: 22px;
     }
 
     .section-head {
@@ -372,13 +380,13 @@ Example:
 
     button.submit-button {
       margin-top: 16px;
-      padding: 26px 24px;
+      padding: 24px 24px;
       width: 100%;
       border: 1px solid var(--accent);
-      border-radius: 10px;
+      border-radius: 6px;
       background: var(--accent);
       color: white;
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       font-weight: 400;
       letter-spacing: 0.04em;
       text-transform: uppercase;
@@ -406,7 +414,7 @@ Example:
       max-width: 760px;
       border: 0;
       border-top: 1px solid var(--line);
-      margin: 0 0 32px;
+      margin: 0;
     }
 
     @media (max-width: 1180px) {
@@ -493,10 +501,10 @@ Example:
   <div class="wrap">
     <h1 style="font-family: Georgia, serif; font-size: 2.4rem; margin: 24px 0 20px;">Rental Reference Request</h1>
     <hr class="section-divider">
-    <div id="adminInstructions" style="display:none; max-width:760px; margin-top:32px; margin-bottom:18px; color: var(--muted); line-height:1.7;">
+    <div id="adminInstructions" style="display:none; max-width:760px; margin-top:48px; margin-bottom:18px; color: var(--muted); line-height:1.7;">
       <strong style="color: var(--text); font-weight:500;">Admin instructions:</strong> Prefill the form, then click Generate Prefilled Link. After that, click Send Email to draft an email to the previous landlord using the email address entered above.
     </div>
-    <div id="adminTools" style="display:none; max-width:760px; margin-bottom:48px;">
+    <div id="adminTools" class="action-panel" style="display:none; margin-bottom:48px;">
       <button type="button" id="generateLinkBtn" class="submit-button" style="margin-top:0;">GENERATE RENTAL REFERENCE REQUEST LINK</button>
       <button type="button" id="sendEmailBtn" class="submit-button" style="margin-top:12px; background:#f7f4ef; color:#1e1b18;">SEND EMAIL</button>
       <div id="generatedLinkWrap" style="display:none; margin-top:18px;">
